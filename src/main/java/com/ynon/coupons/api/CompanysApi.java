@@ -17,7 +17,7 @@ import com.ynon.coupons.entities.Company;
 import com.ynon.coupons.exceptions.ApplicationException;
 import com.ynon.coupons.logic.CompanysController;
 
-
+//
 @RestController
 @RequestMapping("/company")
 public class CompanysApi {
