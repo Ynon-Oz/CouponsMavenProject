@@ -29,6 +29,7 @@ public class CostumersController {
 
 		customer.setUserPassword(usersController.obfuscation(customer.getUserPassword()));
 		this.customersDao.save(customer);
+		//TODO register confirmation mail
 	}
 
 
