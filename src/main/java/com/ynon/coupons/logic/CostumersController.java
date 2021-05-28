@@ -26,8 +26,9 @@ public class CostumersController {
 		if(this.usersController.isUserExist(customer.getUser().getUserName())) {
 			throw new ApplicationException(ErrorType.USER_ALLREADY_EXIST, ErrorType.USER_ALLREADY_EXIST.getErrorMessage());
 		}
+		//TODO set first letter of first and last name to capital letter
+		customer.getUser().setPassword(usersController.obfuscation(customer.getUser().getPassword()));
 
-		customer.setUserPassword(usersController.obfuscation(customer.getUserPassword()));
 		this.customersDao.save(customer);
 		//TODO register confirmation mail
 	}
@@ -51,14 +52,14 @@ public class CostumersController {
 
 	//UPDATE
 	public long updateCostumer(Customer customer) throws ApplicationException {
-		Customer update = new Customer();
-		update = this.customersDao.getOne(customer.getUserId());
-		update.setFirstName(customer.getFirstName());
-		update.setLastName(customer.getLastName());
-		update.setAddress(customer.getAddress());
-		update.setPhone(customer.getPhone());
-		update.setUserPassword(usersController.obfuscation(customer.getUserPassword()));
-		return this.customersDao.saveAndFlush(update).getUser().getUserId();
+		Customer updatedCustomer = new Customer();
+		updatedCustomer = this.customersDao.getOne(customer.getId());
+		updatedCustomer.setFirstName(customer.getFirstName());
+		updatedCustomer.setLastName(customer.getLastName());
+		updatedCustomer.setAddress(customer.getAddress());
+		updatedCustomer.setPhone(customer.getPhone());
+		updatedCustomer.getUser().setPassword(usersController.obfuscation(customer.getUser().getPassword()));
+		return this.customersDao.saveAndFlush(updatedCustomer).getUser().getId();
 	}
 
 

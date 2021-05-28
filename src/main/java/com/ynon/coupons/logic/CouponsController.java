@@ -5,6 +5,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 
 import com.ynon.coupons.beans.javabeans.CouponBean;
@@ -12,6 +13,8 @@ import com.ynon.coupons.dao.ICouponsDao;
 import com.ynon.coupons.entities.Coupon;
 import com.ynon.coupons.enums.ErrorType;
 import com.ynon.coupons.exceptions.ApplicationException;
+
+import javax.transaction.Transactional;
 
 
 @Controller
@@ -95,7 +98,7 @@ public class CouponsController {
 		}
 		List<Coupon> companyCoupons = new ArrayList<>();
 		companyCoupons = getByCompanyId(couponBean.getCompanyId());
-		//WASTED! return company info for each coupon!!!!!!!
+		//TODO WASTED! return company info for each coupon!!!!!!!
 		for (Coupon c : companyCoupons) {
 			if (c.getTitle().equalsIgnoreCase(couponBean.getTitle())) {
 				throw new ApplicationException(ErrorType.COUPON_TITLE_IS_ALLREADY_EXISTS,"Coupon title is allready exists, choose a differente title");
@@ -104,6 +107,7 @@ public class CouponsController {
 	}
 	
 	//Purchase
+	@Transactional
 	public void purchaseCoupon(long couponId, int amount) {
 		Coupon coupon = new Coupon();
 		coupon = couponsDao.findById(couponId);
@@ -112,7 +116,8 @@ public class CouponsController {
 
 	}
 
-
+	@Transactional
+//	@Scheduled (fixedRate = )
 	public void removeOldCoupons(Date date) throws ApplicationException {
 		try {
 			couponsDao.removeOldCoupons(date);

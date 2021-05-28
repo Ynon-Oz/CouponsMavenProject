@@ -46,7 +46,7 @@ public class CompanysController {
 	public long updateCompany(Company company)throws ApplicationException {
 		Company updated = new Company();
 		updated = this.companysDao.getOne(company.getCompanyId());
-		//???????  -----> Where i get the id from? <------ ???????
+		//TODO ???????  -----> Where do i get the id from? <------ ???????
 		updated.setCompanyAddress(company.getCompanyAddress());
 		updated.setCompanyFaxNumber(company.getCompanyFaxNumber());
 		updated.setCompanyPhoneNumber(company.getCompanyPhoneNumber());

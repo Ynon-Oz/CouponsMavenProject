@@ -23,13 +23,14 @@ public class UsersController{
 
 	//CREATE  -  ADD
 	public long addUser (User user) throws ApplicationException{
+		user.setUserName(user.getUserName().trim().toLowerCase());
 		userValidations(user);
 		if(isUserExist(user.getUserName())) {
 			throw new ApplicationException(ErrorType.USER_ALLREADY_EXIST, ErrorType.USER_ALLREADY_EXIST.getErrorMessage());
 		}
 		user.setPassword(obfuscation(user.getPassword()));
 
-		return usersDao.save(user).getUserId();
+		return usersDao.save(user).getId();
 	}
 
 
@@ -37,7 +38,7 @@ public class UsersController{
 	public long updateUser(User user) throws ApplicationException{
 		userValidations(user);
 		user.setPassword(obfuscation(user.getPassword()));
-		return this.usersDao.save(user).getUserId();
+		return this.usersDao.save(user).getId();
 	}
 
 
@@ -113,7 +114,7 @@ public class UsersController{
 		}
 
 		String token = generateToken(userLoginDetails);
-		SuccessfulLoginData successfulLoginData = new SuccessfulLoginData(user.getType(),user.getUserId(),token);
+		SuccessfulLoginData successfulLoginData = new SuccessfulLoginData(user.getType(),user.getId(),token);
 		cacheContorller.put(successfulLoginData);
 		return successfulLoginData;
 	}

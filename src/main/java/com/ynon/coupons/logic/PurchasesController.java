@@ -15,6 +15,9 @@ import com.ynon.coupons.enums.CouponsCategory.CouponCategory;
 import com.ynon.coupons.enums.ErrorType;
 import com.ynon.coupons.exceptions.ApplicationException;
 
+import javax.transaction.Transactional;
+
+@Transactional
 @Controller
 public class PurchasesController {
 	@Autowired
@@ -35,7 +38,7 @@ public class PurchasesController {
 		validations(purchase);
 		this.couponsController.purchaseCoupon(purchaseBaen.getCouponId(),purchaseBaen.getAmount());
 		this.purchasesDao.save(purchase);
-
+	//TODO Send purchace details by mail
 	}
 // Validations
 	private boolean validations(Purchase purchase) throws ApplicationException {
@@ -50,7 +53,7 @@ public class PurchasesController {
 			throw new ApplicationException(ErrorType.PURCHASE_FAILED_COUPON_EXPIRED," purchase process failed - coupon is not valid yet");
 		}
 		List<PurchaseBean> customerPurchasesList = new ArrayList<PurchaseBean>();
-		customerPurchasesList = getAllByCustomerId(purchase.getCustomer().getUserId());
+		customerPurchasesList = getAllByCustomerId(purchase.getCustomer().getUser().getId());
 		if(customerPurchasesList!=null) {
 			for (PurchaseBean p : customerPurchasesList) {
 				if (p.getCouponId()==purchase.getCoupon().getId()) {

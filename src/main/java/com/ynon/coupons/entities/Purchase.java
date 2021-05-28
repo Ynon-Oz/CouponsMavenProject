@@ -10,9 +10,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Positive;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import org.springframework.validation.annotation.Validated;
+
 @Entity
+@Validated
 @Table(name="Purchases")
 
 public class Purchase {
@@ -28,7 +32,7 @@ public class Purchase {
 	@JoinColumn(name = "couponId", nullable = false, unique = false)
 	@ManyToOne (fetch = FetchType.LAZY)
 	private Coupon coupon;
-
+	@Positive
 	@Column(name = "amount", nullable = false)
 	private int amount;
 
