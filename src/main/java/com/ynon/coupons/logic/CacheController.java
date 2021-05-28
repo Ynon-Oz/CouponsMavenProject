@@ -1,28 +1,28 @@
 package com.ynon.coupons.logic;
 
-import java.util.HashMap;
-import java.util.Map;
 
 import com.ynon.coupons.dao.CacheDao;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.ynon.coupons.beans.SuccessfulLoginData;
+import org.springframework.stereotype.Service;
 
 
-
-@Component
+@Slf4j
+@Service
 public class CacheController {
 
-	@Autowired
-	private CacheDao map;
+    @Autowired
+    private CacheDao map;
 
 
-	public void put(SuccessfulLoginData successfulLoginData) {
-		this.map.put(successfulLoginData.getToken(), successfulLoginData);
-	} 
+    public void put(SuccessfulLoginData successfulLoginData) {
 
-	public SuccessfulLoginData get(String key) {
-		return this.map.getData(key);
-	}
+        this.map.put(successfulLoginData.getToken(), successfulLoginData);
+        log.info("UserId: " + successfulLoginData.getUserId() + " have been add to cache");
+    }
+
+    public SuccessfulLoginData get(String key) {
+        return this.map.getData(key);
+    }
 }

@@ -8,7 +8,9 @@ import org.springframework.data.repository.query.Param;
 
 import com.ynon.coupons.beans.javabeans.CustomerBean;
 import com.ynon.coupons.entities.Customer;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ICustomersDao extends JpaRepository<Customer, Long> {
 	public Customer findById(long id);
 

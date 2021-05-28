@@ -13,7 +13,9 @@ import org.springframework.data.repository.query.Param;
 
 import com.ynon.coupons.beans.javabeans.CouponBean;
 import com.ynon.coupons.entities.Coupon;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ICouponsDao extends JpaRepository<Coupon, Long> {
 
 	public Coupon findById(long id);

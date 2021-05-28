@@ -2,8 +2,8 @@ package com.ynon.coupons.logic;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 
 import com.ynon.coupons.beans.SuccessfulLoginData;
 import com.ynon.coupons.beans.UserLoginDetails;
@@ -12,9 +12,10 @@ import com.ynon.coupons.dao.IUsersDao;
 import com.ynon.coupons.entities.User;
 import com.ynon.coupons.enums.ErrorType;
 import com.ynon.coupons.exceptions.ApplicationException;
+import org.springframework.stereotype.Service;
 
-
-@Controller
+@Slf4j
+@Service
 public class UsersController{
 	@Autowired
 	private IUsersDao usersDao;
@@ -29,7 +30,7 @@ public class UsersController{
 			throw new ApplicationException(ErrorType.USER_ALLREADY_EXIST, ErrorType.USER_ALLREADY_EXIST.getErrorMessage());
 		}
 		user.setPassword(obfuscation(user.getPassword()));
-
+		log.info("User "+user.getUserName()+" is adding to DB");
 		return usersDao.save(user).getId();
 	}
 
@@ -75,7 +76,7 @@ public class UsersController{
 	//VALIDATIONS
 	private void userValidations(User user) throws ApplicationException{
 		if (user == null) {
-			throw new ApplicationException(ErrorType.NULL,"User details missing");
+			throw new ApplicationException(ErrorType.NULL,"User details are missing");
 		}
 		if (user.getPassword().equals("")) {
 			throw new ApplicationException(ErrorType.USER_EMPTY_PASSWORD,"Empty password");
@@ -92,13 +93,18 @@ public class UsersController{
 
 	}
 
+
 	//EMAIL VALIDATION
-	public boolean isValidEmailAddress(String email) {
-		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
-		java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
-		java.util.regex.Matcher m = p.matcher(email);
-		return m.matches();
-	}
+//	public boolean isValidEmailAddress(String email) {
+
+	/**
+	 *Email Validation have been changed to  javax.validation.constraints.Email at relevant entities;
+	 */
+//		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+//		java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+//		java.util.regex.Matcher m = p.matcher(email);
+//		return m.matches();
+//	}
 
 	//LOGIN
 	public SuccessfulLoginData userLogin(UserLoginDetails userLoginDetails) throws ApplicationException {

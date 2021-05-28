@@ -11,6 +11,7 @@
 //import javax.servlet.http.HttpServletRequest;
 //import javax.servlet.http.HttpServletResponse;
 //
+//import lombok.extern.slf4j.Slf4j;
 //import org.springframework.beans.factory.annotation.Autowired;
 //import org.springframework.core.annotation.Order;
 //import org.springframework.stereotype.Component;
@@ -18,9 +19,11 @@
 //import com.ynon.coupons.beans.SuccessfulLoginData;
 //import com.ynon.coupons.logic.CacheController;
 //
-//
+//@Slf4j
 //@Component
 //@Order(2)
+//
+//
 //public class LoginFilter implements Filter{
 //
 //	@Autowired

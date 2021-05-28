@@ -8,8 +8,9 @@ import org.springframework.data.repository.query.Param;
 
 import com.ynon.coupons.beans.javabeans.UserBean;
 import com.ynon.coupons.entities.User;
+import org.springframework.stereotype.Repository;
 
-
+@Repository
 public interface IUsersDao extends JpaRepository<User, Long> {
 
 

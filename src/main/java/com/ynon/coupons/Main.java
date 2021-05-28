@@ -18,9 +18,11 @@ import com.ynon.coupons.enums.UserType;
 import com.ynon.coupons.exceptions.ApplicationException;
 import com.ynon.coupons.logic.UsersController;
 import com.ynon.coupons.enums.CouponsCategory.CouponCategory;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 @Slf4j
 @SpringBootApplication
+@EnableScheduling
 public class Main {
 
 	public static void main(String[] args) throws ApplicationException {

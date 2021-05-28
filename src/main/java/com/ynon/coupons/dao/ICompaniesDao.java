@@ -9,7 +9,9 @@ import org.springframework.data.repository.query.Param;
 
 import com.ynon.coupons.beans.javabeans.CompanyBean;
 import com.ynon.coupons.entities.Company;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface ICompaniesDao extends JpaRepository<Company, Long> {
 
 	@Query("SELECT new com.ynon.coupons.beans.javabeans.CompanyBean(companyId, companyName, companyAddress, companyPhoneNumber,companyFaxNumber,companyWebSite) FROM Company c WHERE c.companyId= :companyId")
