@@ -59,7 +59,7 @@ public class Coupon {
 	private String description;
 //	@PastOrPresent
 	@Column(name = "startDate",  nullable = false)
-	private Date stratDate;
+	private Date startDate;
 //	@FutureOrPresent
 	@Column(name = "endDate",  nullable = false)
 	private Date endDate;
@@ -83,14 +83,14 @@ public class Coupon {
 	
 
 
-	public Coupon(long id, Company company, CouponCategory type, String title, String description, Date stratDate,
+	public Coupon(long id, Company company, CouponCategory type, String title, String description, Date startDate,
 			Date endDate, int amount, float price, String image) {
 		this.id = id;
 		this.company = company;
 		this.type = type;
 		this.title = title;
 		this.description = description;
-		this.stratDate = stratDate;
+		this.startDate = startDate;
 		this.endDate = endDate;
 		this.amount = amount;
 		this.price = price;
@@ -98,14 +98,14 @@ public class Coupon {
 		this.purchases = null;
 	}
 
-	public Coupon(long id, Company company, CouponCategory type, String title, String description, java.util.Date stratDate,
+	public Coupon(long id, Company company, CouponCategory type, String title, String description, java.util.Date startDate,
 			java.util.Date endDate, int amount, float price, String image) {
 		this.id = id;
 		this.company = company;
 		this.type = type;
 		this.title = title;
 		this.description = description;
-		this.stratDate = DateUtils.convetDateFromUtilToSql(stratDate);
+		this.startDate = DateUtils.convetDateFromUtilToSql(startDate);
 		this.endDate = DateUtils.convetDateFromUtilToSql(endDate);
 		this.amount = amount;
 		this.price = price;
@@ -120,7 +120,7 @@ public class Coupon {
 		this.type = type;
 		this.title = title;
 		this.description = description;
-		this.stratDate = startDate;
+		this.startDate = startDate;
 		this.endDate = endDate;
 		this.amount = amount;
 		this.price = price;

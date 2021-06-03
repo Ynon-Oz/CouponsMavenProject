@@ -1,6 +1,5 @@
 package com.ynon.coupons.logic;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import com.ynon.coupons.beans.javabeans.EmailMessage;
@@ -25,7 +24,7 @@ public class CostumersController {
     @Autowired
     private EmailService emailService;
 
-    public static final String REGISTERATION_CONFIRMATION_EMAIL_TEMPLATE =
+    public static final String REGISTRATION_CONFIRMATION_EMAIL_TEMPLATE =
             "Dear %s,\n"+"\n"
                     + "Thank you for choose becoming a member of CouponSystem,\n"
                     + "Please click the link below to activate your account:\n"
@@ -54,7 +53,7 @@ public class CostumersController {
         confirmationEmail.setToEmail(customer.getUser().getUserName());
         String message =
                 String.format(
-                        REGISTERATION_CONFIRMATION_EMAIL_TEMPLATE,
+                        REGISTRATION_CONFIRMATION_EMAIL_TEMPLATE,
                         customer.getFirstName(),
                         "http://localhost:8080/users/active/",
                         customer.getUser().getId());

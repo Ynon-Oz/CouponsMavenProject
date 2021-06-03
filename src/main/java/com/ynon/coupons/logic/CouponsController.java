@@ -5,7 +5,6 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 
 import com.ynon.coupons.beans.javabeans.CouponBean;
 import com.ynon.coupons.dao.ICouponsDao;
@@ -41,7 +40,7 @@ public class CouponsController {
         coupon.setPrice(couponBean.getPrice());
         coupon.setImage(couponBean.getImage());
         coupon.setType(couponBean.getType());
-        coupon.setStratDate(couponBean.getStratDate());
+        coupon.setStartDate(couponBean.getStartDate());
         coupon.setEndDate(couponBean.getEndDate());
         return this.couponsDao.saveAndFlush(coupon);
     }
@@ -76,7 +75,7 @@ public class CouponsController {
         coupon.setPrice(couponBean.getPrice());
         coupon.setImage(couponBean.getImage());
         coupon.setType(couponBean.getType());
-        coupon.setStratDate(couponBean.getStratDate());
+        coupon.setStartDate(couponBean.getStartDate());
         coupon.setEndDate(couponBean.getEndDate());
         coupon.setCompany(companiesController.getCompanyFindById(couponBean.getCompanyId()));
         return this.couponsDao.save(coupon).getId();
@@ -101,7 +100,7 @@ public class CouponsController {
         //TODO WASTED! return company info for each coupon!!!!!!!
         for (Coupon c : companyCoupons) {
             if (c.getTitle().equalsIgnoreCase(couponBean.getTitle())) {
-                throw new ApplicationException(ErrorType.COUPON_TITLE_IS_ALLREADY_EXISTS, "Coupon title is allready exists, choose a differente title");
+                throw new ApplicationException(ErrorType.COUPON_TITLE_IS_ALLREADY_EXISTS, "Coupon title is already exists, choose a different title");
             }
         }
     }

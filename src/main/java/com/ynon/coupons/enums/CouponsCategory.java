@@ -4,10 +4,10 @@ public class CouponsCategory {
 	public enum CouponCategory {
 		FOOD("Food"),
 		ELECTICITY("Electricity"),
-		RESTURANT("Resturant"),
+		RESTURANT("Restaurant"),
 		VACATION("Vacation"),
 		SPA("Spa"),
-		ATTRACTION("Attruction"),
+		ATTRACTION("Attraction"),
 		FURNITURE("Furniture"),
 		FASHION("Fashion"),
 		SPORT("Sport"),

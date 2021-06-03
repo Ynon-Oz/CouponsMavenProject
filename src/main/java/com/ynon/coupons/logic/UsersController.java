@@ -20,7 +20,7 @@ public class UsersController{
 	@Autowired
 	private IUsersDao usersDao;
 	@Autowired
-	private CacheController cacheContorller;
+	private CacheController cacheController;
 
 	//CREATE  -  ADD
 	public long addUser (User user) throws ApplicationException{
@@ -121,7 +121,7 @@ public class UsersController{
 
 		String token = generateToken(userLoginDetails);
 		SuccessfulLoginData successfulLoginData = new SuccessfulLoginData(user.getType(),user.getId(),token);
-		cacheContorller.put(successfulLoginData);
+		cacheController.put(successfulLoginData);
 		return successfulLoginData;
 	}
 

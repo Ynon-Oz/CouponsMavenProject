@@ -16,7 +16,7 @@ public class CouponBean {
 	private CouponCategory type; 
 	private String title;
 	private String description;
-	private Date stratDate;
+	private Date startDate;
 	private Date endDate;
 	private int amount;
 	private float price;
@@ -25,14 +25,14 @@ public class CouponBean {
 	
 
 
-	public CouponBean(long companyId, CouponCategory type, String title, String description, Date stratDate,
+	public CouponBean(long companyId, CouponCategory type, String title, String description, Date startDate,
 			Date endDate, int amount, float price, String image) {
 		super();
 		this.companyId = companyId;
 		this.type = type;
 		this.title = title;
 		this.description = description;
-		this.stratDate = stratDate;
+		this.startDate = startDate;
 		this.endDate = endDate;
 		this.amount = amount;
 		this.price = price;
@@ -43,7 +43,7 @@ public class CouponBean {
 
 
 
-	public CouponBean(long id, long companyId, CouponCategory type, String title, String description, java.util.Date stratDate,
+	public CouponBean(long id, long companyId, CouponCategory type, String title, String description, java.util.Date startDate,
 			java.util.Date endDate, int amount, float price, String image) {
 		super();
 		this.id = id;
@@ -51,7 +51,7 @@ public class CouponBean {
 		this.type = type;
 		this.title = title;
 		this.description = description;
-		this.stratDate = DateUtils.convetDateFromUtilToSql(stratDate);
+		this.startDate = DateUtils.convetDateFromUtilToSql(startDate);
 		this.endDate = DateUtils.convetDateFromUtilToSql(endDate);
 		this.amount = amount;
 		this.price = price;
@@ -72,7 +72,7 @@ public class CouponBean {
 
 	public String toString() {
 		return "Coupon [id=" + id + ", companyId=" + companyId + ", type=" + type + ", title=" + title
-				+ ", description=" + description + ", stratDate=" + stratDate + ", endDate=" + endDate + ", amount="
+				+ ", description=" + description + ", startDate=" + startDate + ", endDate=" + endDate + ", amount="
 				+ amount + ", price=" + price + ", image=" + image + "]";
 	}
 
@@ -108,11 +108,11 @@ public class CouponBean {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	public Date getStratDate() {
-		return stratDate;
+	public Date getStartDate() {
+		return startDate;
 	}
-	public void setStratDate(Date stratDate) {
-		this.stratDate = stratDate;
+	public void setStartDate(Date startDate) {
+		this.startDate = startDate;
 	}
 	public Date getEndDate() {
 		return endDate;

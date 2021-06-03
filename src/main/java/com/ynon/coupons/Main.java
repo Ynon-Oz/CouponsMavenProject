@@ -39,12 +39,12 @@ public class Main {
 		Company comp1 = new Company("Coca Cola","32 Akiva st Bney Brak","03-6432166","03-6432100","www.coca-cola.co.il",null,null);
 		Company comp2 = new Company("ZARA","57 Haruv st Herzlya","09-9517654","09-9517653","www.zara.co.il",null,null);
 
-		Date startDate = new Date(120, 0, 1); //(years since 1900, mounth 0-11, day 1-31)
+		Date startDate = new Date(120, 0, 1); //(years since 1900, month 0-11, day 1-31)
 		Date endDate = new Date(122, 11, 31);
 		// Creating Coupons
 		log.info("Creating coupons");
 		Coupon c1 = new Coupon(comp1,CouponCategory.FOOD,"Manceasss","Fistukim",startDate,endDate,150,9.9f,"fistuk.jpg");
-		Coupon c2 = new Coupon(comp1,CouponCategory.FOOD,"Burger","American burger with chedder",startDate,endDate,100,49.5f,"burger.jpg");
+		Coupon c2 = new Coupon(comp1,CouponCategory.FOOD,"Burger","American burger with cheddar",startDate,endDate,100,49.5f,"burger.jpg");
 		Coupon c3 = new Coupon(comp1,CouponCategory.FOOD,"Hot Dog","Chicken HOT DOG",startDate,endDate,200,25f,"hotdog.jpg");
 		Coupon c4 = new Coupon(comp1,CouponCategory.VEHICLE,"Air Craft","F-35 Aircraft INCLUDES 8 ROCKETS FREE!",startDate,endDate,2,9999999.9f,"f35.jpg");
 		Coupon c5 = new Coupon(comp2,CouponCategory.FASHION,"Men Clothes","Blue T-Shirt with pocket",startDate,endDate,300,60.5f,"shirt.jpg");

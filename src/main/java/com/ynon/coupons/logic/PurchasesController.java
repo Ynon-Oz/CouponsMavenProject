@@ -28,17 +28,17 @@ public class PurchasesController {
     private CostumersController customersController;
 
     //CREATE /ADD
-    public void addPurchase(PurchaseBean purchaseBaen) throws ApplicationException {
+    public void addPurchase(PurchaseBean purchaseBean) throws ApplicationException {
         Purchase purchase = new Purchase();
-        purchase.setCoupon(this.couponsController.getCouponByCouponId(purchaseBaen.getCouponId()));
-        purchase.setTimeStamp(purchaseBaen.getTimeStamp());
-        purchase.setAmount(purchaseBaen.getAmount());
-        purchase.setCustomer(this.customersController.getCustomer(purchaseBaen.getCostumerId()));
+        purchase.setCoupon(this.couponsController.getCouponByCouponId(purchaseBean.getCouponId()));
+        purchase.setTimeStamp(purchaseBean.getTimeStamp());
+        purchase.setAmount(purchaseBean.getAmount());
+        purchase.setCustomer(this.customersController.getCustomer(purchaseBean.getCostumerId()));
 
         validations(purchase);
-        this.couponsController.purchaseCoupon(purchaseBaen.getCouponId(), purchaseBaen.getAmount());
+        this.couponsController.purchaseCoupon(purchaseBean.getCouponId(), purchaseBean.getAmount());
         this.purchasesDao.save(purchase);
-        //TODO Send purchace details by Email right after purchasing
+        //TODO Send purchase details by Email right after purchasing
     }
 
     // Validations
@@ -50,7 +50,7 @@ public class PurchasesController {
         if (purchase.getCoupon().getEndDate().before(today)) {
             throw new ApplicationException(ErrorType.PURCHASE_FAILED_COUPON_EXPIRED, " purchase process failed - coupon expired");
         }
-        if (purchase.getCoupon().getStratDate().after(today)) {
+        if (purchase.getCoupon().getStartDate().after(today)) {
             throw new ApplicationException(ErrorType.PURCHASE_FAILED_COUPON_EXPIRED, " purchase process failed - coupon is not valid yet");
         }
         List<PurchaseBean> customerPurchasesList = new ArrayList<PurchaseBean>();

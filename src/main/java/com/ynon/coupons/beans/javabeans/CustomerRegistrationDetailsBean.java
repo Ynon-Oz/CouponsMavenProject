@@ -1,6 +1,6 @@
 package com.ynon.coupons.beans.javabeans;
 
-public class CustomerRegisterationDetailsBean {
+public class CustomerRegistrationDetailsBean {
 		private String userName;
 		private String password;
 		private String firstName;
@@ -10,8 +10,8 @@ public class CustomerRegisterationDetailsBean {
 		private String address;
 	
 		
-		public CustomerRegisterationDetailsBean(String userName, String password, String firstName, String lastName,
-				String phoneNumber, Long personalId, String address) {
+		public CustomerRegistrationDetailsBean(String userName, String password, String firstName, String lastName,
+											   String phoneNumber, Long personalId, String address) {
 			super();
 			this.userName = userName;
 			this.password = password;
@@ -95,7 +95,7 @@ public class CustomerRegisterationDetailsBean {
 
 		@Override
 		public String toString() {
-			return "CustomerRegisterationDetailsBean [userName=" + userName + ", password=" + password + ", firstName="
+			return "CustomerRegistrationDetailsBean [userName=" + userName + ", password=" + password + ", firstName="
 					+ firstName + ", lastName=" + lastName + ", phoneNumber=" + phoneNumber + ", personalId="
 					+ personalId + ", address=" + address + "]";
 		}

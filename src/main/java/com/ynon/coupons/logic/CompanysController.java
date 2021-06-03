@@ -15,7 +15,7 @@ import org.springframework.stereotype.Service;
 public class CompanysController {
 
     @Autowired
-    private ICompaniesDao companysDao;
+    private ICompaniesDao companiesDao;
 
 
     public CompanysController() {
@@ -24,40 +24,40 @@ public class CompanysController {
     //ADD
     public long addCompany(Company company) throws ApplicationException {
         validations(company);
-        return this.companysDao.save(company).getCompanyId();
+        return this.companiesDao.save(company).getCompanyId();
     }
 
 
     //GET
     public CompanyBean getCompanyById(long companyId) throws ApplicationException {
-        return this.companysDao.getCompanyById(companyId);
+        return this.companiesDao.getCompanyById(companyId);
     }
 
     public Company getCompanyFindById(long companyId) throws ApplicationException {
-        return this.companysDao.findById(companyId).get();
+        return this.companiesDao.findById(companyId).get();
     }
 
     public List<CompanyBean> getAllCompanies() throws ApplicationException {
-        return this.companysDao.getAllCompanies();
+        return this.companiesDao.getAllCompanies();
     }
 
     //UPDATE
     public long updateCompany(Company company) throws ApplicationException {
         Company updated = new Company();
-        updated = this.companysDao.getOne(company.getCompanyId());
+        updated = this.companiesDao.getOne(company.getCompanyId());
         //TODO ???????  -----> Where do i get the id from? <------ ???????
         updated.setCompanyAddress(company.getCompanyAddress());
         updated.setCompanyFaxNumber(company.getCompanyFaxNumber());
         updated.setCompanyPhoneNumber(company.getCompanyPhoneNumber());
         updated.setCompanyWebSite(company.getCompanyWebSite());
-        return this.companysDao.saveAndFlush(updated).getCompanyId();
+        return this.companiesDao.saveAndFlush(updated).getCompanyId();
     }
 
 
     //DELETE
 
     public void deleteCompany(long companyId) throws ApplicationException {
-        this.companysDao.deleteById(companyId);
+        this.companiesDao.deleteById(companyId);
 
     }
 
@@ -73,13 +73,13 @@ public class CompanysController {
         }
 
         if (existsByName(company.getCompanyName())) {
-            throw new ApplicationException(ErrorType.INVALID_COMPANY, "Company allreaady exist");
+            throw new ApplicationException(ErrorType.INVALID_COMPANY, "Company already exist");
         }
     }
 
     private boolean existsByName(String companyName) {
         Company c = new Company();
-        c = companysDao.findByCompanyName(companyName);
+        c = companiesDao.findByCompanyName(companyName);
         if (c == null) {
             return false;
         }

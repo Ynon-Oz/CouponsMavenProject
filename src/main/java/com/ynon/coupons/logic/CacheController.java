@@ -15,7 +15,6 @@ public class CacheController {
     @Autowired
     private CacheDao map;
 
-
     public void put(SuccessfulLoginData successfulLoginData) {
 
         this.map.put(successfulLoginData.getToken(), successfulLoginData);
