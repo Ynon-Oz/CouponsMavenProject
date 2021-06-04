@@ -5,6 +5,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import com.ynon.coupons.beans.javabeans.EmailMessage;
+import com.ynon.coupons.config.Config;
+import com.ynon.coupons.messages.EmailMessages;
+import com.ynon.coupons.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ynon.coupons.beans.javabeans.PurchaseBean;
@@ -15,6 +19,7 @@ import com.ynon.coupons.enums.ErrorType;
 import com.ynon.coupons.exceptions.ApplicationException;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
 
 @Transactional
@@ -26,19 +31,38 @@ public class PurchasesController {
     private CouponsController couponsController;
     @Autowired
     private CostumersController customersController;
-
+@Autowired
+private EmailService emailService;
     //CREATE /ADD
+    @Transactional
     public void addPurchase(PurchaseBean purchaseBean) throws ApplicationException {
         Purchase purchase = new Purchase();
         purchase.setCoupon(this.couponsController.getCouponByCouponId(purchaseBean.getCouponId()));
         purchase.setTimeStamp(purchaseBean.getTimeStamp());
         purchase.setAmount(purchaseBean.getAmount());
         purchase.setCustomer(this.customersController.getCustomer(purchaseBean.getCostumerId()));
-
+        Integer amount = new Integer(purchase.getAmount());
+        float totalPrice = amount.floatValue() * purchase.getCoupon().getPrice();
         validations(purchase);
         this.couponsController.purchaseCoupon(purchaseBean.getCouponId(), purchaseBean.getAmount());
         this.purchasesDao.save(purchase);
         //TODO Send purchase details by Email right after purchasing
+        EmailMessage PurchaseEmail = new EmailMessage();
+        PurchaseEmail.setFromName(Config.ORGANIZATION_NAME+" Team");
+        PurchaseEmail.setSubject(EmailMessages.SUBJECT_PURCHASE_CONFIRMATION);
+        PurchaseEmail.setToEmail(purchase.getCustomer().getUser().getUserName());
+        PurchaseEmail.setToName(purchase.getCustomer().getFirstName() + " " + purchase.getCustomer().getLastName());
+        String message =
+                String.format(
+                        EmailMessages.PURCHASE_EMAIL_TEMPLATE,
+                        purchase.getCustomer().getFirstName() + " " + purchase.getCustomer().getLastName(),
+                        purchase.getCoupon().getTitle(),
+                        purchase.getAmount(),
+                        totalPrice,
+                        purchase.getTimeStamp());
+
+        PurchaseEmail.setMessage(message);
+        emailService.sendEmail(PurchaseEmail);
     }
 
     // Validations

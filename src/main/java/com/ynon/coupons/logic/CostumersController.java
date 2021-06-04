@@ -3,6 +3,8 @@ package com.ynon.coupons.logic;
 import java.util.List;
 
 import com.ynon.coupons.beans.javabeans.EmailMessage;
+import com.ynon.coupons.config.Config;
+import com.ynon.coupons.messages.EmailMessages;
 import com.ynon.coupons.services.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,15 +26,6 @@ public class CostumersController {
     @Autowired
     private EmailService emailService;
 
-    public static final String REGISTRATION_CONFIRMATION_EMAIL_TEMPLATE =
-            "Dear %s,\n" + "\n"
-                    + "Thank you for choose becoming a member of CouponSystem,\n"
-                    + "Please click the link below to activate your account:\n"
-                    + " %s%s.\n"
-                    + "right after activation you will be able to enjoy our services\n" +
-                    "\n"
-                    + "Always at your service,\n"
-                    + "CouponSystem Team.";
 
     //CREATE
     public void addCostumer(Customer customer) throws ApplicationException {
@@ -49,20 +42,25 @@ public class CostumersController {
         this.customersDao.save(customer);
         //TODO register confirmation Email
         EmailMessage confirmationEmail = new EmailMessage();
-        confirmationEmail.setFromName("Coupon System Team");
-        confirmationEmail.setSubject("Register confirmation mail");
+        confirmationEmail.setFromName(Config.ORGANIZATION_NAME+" Team");
+        confirmationEmail.setSubject(EmailMessages.SUBJECT_NEW_USER_REGISTRATION);
         confirmationEmail.setToEmail(customer.getUser().getUserName());
         confirmationEmail.setToName(customer.getFirstName() + " " + customer.getLastName());
         String message =
                 String.format(
-                        REGISTRATION_CONFIRMATION_EMAIL_TEMPLATE,
+                        EmailMessages.REGISTRATION_CONFIRMATION_EMAIL_TEMPLATE,
                         customer.getFirstName() + " " + customer.getLastName(),
-                        "http://localhost:8080/users/active/",// TODO Add activation key generator
+                        Config.HOST_URL+"/users/active/",// TODO Add activation key generator
                         customer.getUser().getId());
         confirmationEmail.setMessage(message);
         emailService.sendEmail(confirmationEmail);
     }
 
+    /**
+     * This method gets String and returns a String name
+     * having a capital first letter and the rest of letters small
+     *
+     */
     private String nameFormatter(String name) {
         name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
 
