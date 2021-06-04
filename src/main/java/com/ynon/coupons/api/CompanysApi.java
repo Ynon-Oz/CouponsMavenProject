@@ -24,7 +24,7 @@ public class CompanysApi {
 	@Autowired
 	CompanysController companysController;
 
-
+//TODO @RequestBody for sensitive info and @PathVariable for coupons only
 
 	//CREATE
 	@PostMapping

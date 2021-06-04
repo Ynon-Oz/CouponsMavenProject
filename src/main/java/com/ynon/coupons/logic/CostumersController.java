@@ -25,10 +25,10 @@ public class CostumersController {
     private EmailService emailService;
 
     public static final String REGISTRATION_CONFIRMATION_EMAIL_TEMPLATE =
-            "Dear %s,\n"+"\n"
+            "Dear %s,\n" + "\n"
                     + "Thank you for choose becoming a member of CouponSystem,\n"
                     + "Please click the link below to activate your account:\n"
-                    + " %s %s.\n"
+                    + " %s%s.\n"
                     + "right after activation you will be able to enjoy our services\n" +
                     "\n"
                     + "Always at your service,\n"
@@ -37,28 +37,36 @@ public class CostumersController {
     //CREATE
     public void addCostumer(Customer customer) throws ApplicationException {
         if (this.usersController.isUserExist(customer.getUser().getUserName())) {
-            throw new ApplicationException(ErrorType.USER_ALLREADY_EXIST, ErrorType.USER_ALLREADY_EXIST.getErrorMessage());
+            throw new ApplicationException(ErrorType.USER_ALREADY_EXIST, ErrorType.USER_ALREADY_EXIST.getErrorMessage());
         }
-        customer.setFirstName(customer.getLastName().toLowerCase());
-        customer.setFirstName(customer.getFirstName());
-        customer.getFirstName().toLowerCase();
-        //TODO set first letter of first and last name to capital letter
+        // set first letter of first and last name to capital letter
+        customer.setFirstName(nameFormatter(customer.getFirstName()));
+        customer.setLastName(nameFormatter(customer.getLastName()));
+
         customer.getUser().setPassword(usersController.obfuscation(customer.getUser().getPassword()));
 
+
         this.customersDao.save(customer);
-        //TODO register confirmation mail
+        //TODO register confirmation Email
         EmailMessage confirmationEmail = new EmailMessage();
         confirmationEmail.setFromName("Coupon System Team");
         confirmationEmail.setSubject("Register confirmation mail");
         confirmationEmail.setToEmail(customer.getUser().getUserName());
+        confirmationEmail.setToName(customer.getFirstName() + " " + customer.getLastName());
         String message =
                 String.format(
                         REGISTRATION_CONFIRMATION_EMAIL_TEMPLATE,
-                        customer.getFirstName(),
-                        "http://localhost:8080/users/active/",
+                        customer.getFirstName() + " " + customer.getLastName(),
+                        "http://localhost:8080/users/active/",// TODO Add activation key generator
                         customer.getUser().getId());
         confirmationEmail.setMessage(message);
-        emailService.sendEmail( confirmationEmail );
+        emailService.sendEmail(confirmationEmail);
+    }
+
+    private String nameFormatter(String name) {
+        name = name.substring(0, 1).toUpperCase() + name.substring(1).toLowerCase();
+
+        return name;
     }
 
 

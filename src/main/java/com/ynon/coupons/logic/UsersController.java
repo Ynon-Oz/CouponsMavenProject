@@ -27,7 +27,7 @@ public class UsersController{
 		user.setUserName(user.getUserName().trim().toLowerCase());
 		userValidations(user);
 		if(isUserExist(user.getUserName())) {
-			throw new ApplicationException(ErrorType.USER_ALLREADY_EXIST, ErrorType.USER_ALLREADY_EXIST.getErrorMessage());
+			throw new ApplicationException(ErrorType.USER_ALREADY_EXIST, ErrorType.USER_ALREADY_EXIST.getErrorMessage());
 		}
 		user.setPassword(obfuscation(user.getPassword()));
 		log.info("User "+user.getUserName()+" is adding to DB");
@@ -87,9 +87,7 @@ public class UsersController{
 		if (user.getPassword().length() > 10) {
 			throw new ApplicationException(ErrorType.USER_LONG_PASSWORD,"Long password");
 		}
-		//		if(!isValidEmailAddress(user.getName()) ) {
-		//			throw new ApplicationException(ErrorType.USER_INVALID_EMAIL,"Invalid E-Mail");
-		//		} 
+
 
 	}
 
@@ -98,7 +96,7 @@ public class UsersController{
 //	public boolean isValidEmailAddress(String email) {
 
 	/**
-	 *Email Validation have been changed to  javax.validation.constraints.Email at relevant entities;
+	 *Email Validation have been changed to  javax.validation.constraints.Email at entity User.class;
 	 */
 //		String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
 //		java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
@@ -142,8 +140,13 @@ public class UsersController{
 	}
 
 
+    public void activateUserAccount(long id) {
+		User user =   usersDao.getOne(id);
+		user.setActivated(true);
+		usersDao.saveAndFlush(user);
+		log.info("User "+ user.getUserName() +" has been activated his account",user.getUserName());
 
-
+    }
 }
 
 

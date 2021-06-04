@@ -2,6 +2,7 @@ package com.ynon.coupons.api;
 
 import java.util.List;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +18,7 @@ import com.ynon.coupons.entities.Customer;
 import com.ynon.coupons.exceptions.ApplicationException;
 import com.ynon.coupons.logic.CostumersController;
 
-
+@Slf4j
 @RestController
 @RequestMapping("/customer")
 public class CustomersApi {
@@ -28,8 +29,8 @@ public class CustomersApi {
 	@PostMapping("/register")
 
 	public void addCustomer(@RequestBody Customer customer) throws ApplicationException {
-		System.out.println(customer);
-		this.customersController.addCostumer(customer);	
+		log.debug("Customer added to DB: "+customer);
+		this.customersController.addCostumer(customer);
 	}
 
 
@@ -57,6 +58,7 @@ public class CustomersApi {
 	//DELETE
 	@DeleteMapping("/{id}")
 	public void deleteCustomer(@PathVariable("id")long id) throws ApplicationException {
+		log.debug("Deleting customer id#: "+id);
 		this.customersController.deleteCustomerByCustomerId(id);
 	}
 

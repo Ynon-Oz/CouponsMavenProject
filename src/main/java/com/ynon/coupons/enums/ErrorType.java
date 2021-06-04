@@ -5,7 +5,7 @@ public enum ErrorType {
 	GENERAL_ERROR(601,"General error",true),
 	INVALID_USER(602, "Username already exist",false),
 	INVALID_COMPANY(603, "Company already exist",false),
-	COMAPNY_MISSMATCH(604,"Null Company",false),
+	COMPANY_MISMATCH(604,"Null Company",false),
 	COMPANY_NAME_SHORT(605,"Company name is too short",false),
 	DELETE_COMPANY_FAILED(606,"Delete company was failed",true),
 	COSTUMER_EXIST(607,"Costumer details already exist",false),
@@ -18,7 +18,7 @@ public enum ErrorType {
 	USER_EMPTY_PASSWORD(614,"Empty password",false), 
 	USER_LONG_PASSWORD(615,"Long password",false), 
 	USER_INVALID_EMAIL(616,"Invalid Email",false), 
-	USER_ALLREADY_EXIST(617,"User already exist",false),
+	USER_ALREADY_EXIST(617,"User already exist",false),
 	USER_INVALID(618,"User is not exist",false), 
 	CONNECTION_ERROR(619,"Connection error",true), 
 	COUPON_INVALID_PRICE(620,"Invalid coupon price",true),
@@ -33,7 +33,7 @@ public enum ErrorType {
 	USER_CREATE_ERR(629,"Create User Failed",false),
 	WRONG_USERNAME_OR_PASSWORD(630,"Wrong user name or password", false), 
 	PURCHASE_FAILED_DOUBLE_PURCHASE(631,"can not purchase the same coupon twice",false), 
-	COUPON_TITLE_IS_ALLREADY_EXISTS(632,"Coupon title is already exists, choose a different title",false);
+	COUPON_TITLE_IS_ALREADY_EXISTS(632,"Coupon title is already exists, choose a different title",false);
 
 
 

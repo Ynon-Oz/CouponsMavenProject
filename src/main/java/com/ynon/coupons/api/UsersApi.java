@@ -66,6 +66,11 @@ public class UsersApi {
 		return this.usersController.findUsersByCompany(companyId);
 	}
 
+	@GetMapping("/active/{id}")
+	public void activateUserAccount(@PathVariable("id")long id){
+		this.usersController.activateUserAccount(id);
+	}
+
 //		@GetMapping("/byName")
 //		public List<User> findByName(@RequestParam("name") String name){
 //			return this.usersController.findByName(name);

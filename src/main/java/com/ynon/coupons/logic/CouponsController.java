@@ -100,7 +100,7 @@ public class CouponsController {
         //TODO WASTED! return company info for each coupon!!!!!!!
         for (Coupon c : companyCoupons) {
             if (c.getTitle().equalsIgnoreCase(couponBean.getTitle())) {
-                throw new ApplicationException(ErrorType.COUPON_TITLE_IS_ALLREADY_EXISTS, "Coupon title is already exists, choose a different title");
+                throw new ApplicationException(ErrorType.COUPON_TITLE_IS_ALREADY_EXISTS, "Coupon title is already exists, choose a different title");
             }
         }
     }
@@ -108,6 +108,12 @@ public class CouponsController {
     //Purchase
     @Transactional
     public void purchaseCoupon(long couponId, int amount) {
+
+        //TODO Create purchase more safe and generic
+        /*
+        Avoid situation of purchasing unavailable amount, add option for payment process
+     */
+
         Coupon coupon = new Coupon();
         coupon = couponsDao.findById(couponId);
         coupon.setAmount(coupon.getAmount() - amount);

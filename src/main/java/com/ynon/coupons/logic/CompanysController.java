@@ -64,7 +64,7 @@ public class CompanysController {
     //Validations
     private void validations(Company company) throws ApplicationException {
         if (company == null) {
-            throw new ApplicationException(ErrorType.COMAPNY_MISSMATCH, "Company details are missing");
+            throw new ApplicationException(ErrorType.COMPANY_MISMATCH, "Company details are missing");
         }
 
         if (company.getCompanyName().length() < 2) {
