@@ -3,6 +3,8 @@ package com.ynon.coupons.api;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,12 +26,12 @@ public class CompanysApi {
 	@Autowired
 	CompanysController companysController;
 
-//TODO @RequestBody for sensitive info and @PathVariable for coupons only
+//TODO @RequestBody for sensitive info, and @PathVariable for coupons only
 
 	//CREATE
 	@PostMapping
-	public long addCompany(@RequestBody Company company) throws ApplicationException {
-		return this.companysController.addCompany(company);	
+	public ResponseEntity<?> addCompany(@RequestBody Company company) throws ApplicationException {
+		return new ResponseEntity<>(this.companysController.addCompany(company), HttpStatus.CREATED);
 	}
 
 

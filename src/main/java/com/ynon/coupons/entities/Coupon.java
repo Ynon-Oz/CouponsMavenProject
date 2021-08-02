@@ -23,6 +23,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.ynon.coupons.enums.CouponsCategory.CouponCategory;
 import com.ynon.coupons.utils.DateUtils;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
@@ -34,6 +35,7 @@ import org.springframework.validation.annotation.Validated;
 @Table(name = "Coupons")
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 @Validated
+@Builder
 public class Coupon {
 
 	@Id

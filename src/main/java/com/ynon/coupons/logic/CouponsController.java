@@ -111,7 +111,8 @@ public class CouponsController {
 
         //TODO Create purchase more safe and generic
         /*
-        Avoid situation of purchasing unavailable amount, add option for payment process
+        Safe means: Avoid situation of purchasing unavailable amount, add option for payment process
+        Generic means: Return ResponsiveEntity from repositories to services
      */
 
         Coupon coupon = new Coupon();

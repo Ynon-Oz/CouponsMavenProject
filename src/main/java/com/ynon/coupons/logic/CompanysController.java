@@ -22,9 +22,9 @@ public class CompanysController {
     }
 
     //ADD
-    public long addCompany(Company company) throws ApplicationException {
+    public Company addCompany(Company company) throws ApplicationException {
         validations(company);
-        return this.companiesDao.save(company).getCompanyId();
+        return this.companiesDao.save(company);
     }
 
 

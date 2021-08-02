@@ -38,6 +38,7 @@ public class Main {
 		log.info("Creating companies");
 		Company comp1 = new Company("Coca Cola","32 Akiva st Bney Brak","03-6432166","03-6432100","www.coca-cola.co.il",null,null);
 		Company comp2 = new Company("ZARA","57 Haruv st Herzlya","09-9517654","09-9517653","www.zara.co.il",null,null);
+		Company comp3 = new Company("ZARA","57 Haruv st Herzlya","09-9517654","09-9517653","www.zara.co.il",null,null);
 
 		Date startDate = new Date(120, 0, 1); //(years since 1900, month 0-11, day 1-31)
 		Date endDate = new Date(122, 11, 31);
@@ -81,6 +82,11 @@ public class Main {
 		log.info("***** Loading completed *****");
 
 
+	}
+
+	public static Company createCompanies(){
+
+return null;
 	}
 
 }

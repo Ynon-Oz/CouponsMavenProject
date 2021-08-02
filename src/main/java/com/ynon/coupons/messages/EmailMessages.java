@@ -8,13 +8,13 @@ public class EmailMessages {
 
     public static final String REGISTRATION_CONFIRMATION_EMAIL_TEMPLATE =
             "Dear %s,\n" + "\n"
-                    + "Thank you for choose becoming a member of CouponSystem,\n"
+                    + "Thank you for choose becoming a member of Couponation,\n"
                     + "Please click the link below to activate your account:\n"
                     + " %s%s.\n"
                     + "right after activation you will be able to enjoy our services\n" +
                     "\n"
                     + "Always at your service,\n"
-                    + "CouponSystem Team.";
+                    + "Couponation Team.";
 
 
 

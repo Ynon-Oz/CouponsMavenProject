@@ -13,6 +13,7 @@ import com.ynon.coupons.dao.ICustomersDao;
 import com.ynon.coupons.entities.Customer;
 import com.ynon.coupons.enums.ErrorType;
 import com.ynon.coupons.exceptions.ApplicationException;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 
@@ -32,7 +33,9 @@ public class CostumersController {
         if (this.usersController.isUserExist(customer.getUser().getUserName())) {
             throw new ApplicationException(ErrorType.USER_ALREADY_EXIST, ErrorType.USER_ALREADY_EXIST.getErrorMessage());
         }
-        // set first letter of first and last name to capital letter
+        /**
+         *    set first letter of first and last name to capital letter
+          */
         customer.setFirstName(nameFormatter(customer.getFirstName()));
         customer.setLastName(nameFormatter(customer.getLastName()));
 
@@ -87,8 +90,8 @@ public class CostumersController {
     public long updateCostumer(Customer customer) throws ApplicationException {
         Customer updatedCustomer = new Customer();
         updatedCustomer = this.customersDao.getOne(customer.getId());
-        updatedCustomer.setFirstName(customer.getFirstName());
-        updatedCustomer.setLastName(customer.getLastName());
+        updatedCustomer.setFirstName(nameFormatter(customer.getFirstName()));
+        updatedCustomer.setLastName(nameFormatter(customer.getLastName()));
         updatedCustomer.setAddress(customer.getAddress());
         updatedCustomer.setPhone(customer.getPhone());
         updatedCustomer.getUser().setPassword(usersController.obfuscation(customer.getUser().getPassword()));
