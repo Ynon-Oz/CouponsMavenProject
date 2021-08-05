@@ -60,54 +60,6 @@ public class User {
 		this.type = type;
 		this.isActivated=isActivated;
 	}
-//
-//
-//
-//	public long getUserId() {
-//		return id;
-//	}
-//
-//	public void setUserId(long id) {
-//		this.id = id;
-//	}
-//
-//	public String getUserName() {
-//		return userName;
-//	}
-//
-//	public void setUserName(String name) {
-//		this.userName = name;
-//	}
-//
-//	public String getPassword() {
-//		return password;
-//	}
-//
-//	public void setPassword(String password) {
-//		this.password = password;
-//	}
-//
-//	public Company getCompany() {
-//		return company;
-//	}
-//
-//	public void setCompany(Company company) {
-//		this.company = company;
-//	}
-//
-//	public UserType getType() {
-//		return type;
-//	}
-//
-//	public void setType(UserType type) {
-//		this.type = type;
-//	}
-//
-//	@Override
-//	public String toString() {
-//		return "User [id=" + id + ", userName=" + userName + ", password=" + password + ", company=" + company + ", type="
-//				+ type + "]";
-//	}
 
 
 

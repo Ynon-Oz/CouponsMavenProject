@@ -1,6 +1,7 @@
 package com.ynon.coupons.entities;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -53,7 +54,7 @@ public class Customer  {
 	private List<Purchase> purchases;
 
 //	@PastOrPresent
-	private LocalDate birthday;
+	private LocalDateTime birthday;
 
 
 

@@ -1,6 +1,8 @@
 package com.ynon.coupons.logic;
 
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -70,11 +72,11 @@ private EmailService emailService;
         if (purchase.getCoupon().getAmount() < purchase.getAmount()) {
             throw new ApplicationException(ErrorType.COUPON_AMOUNT_INVALID, ErrorType.COUPON_AMOUNT_INVALID.getErrorMessage());
         }
-        Date today = new Date();
-        if (purchase.getCoupon().getEndDate().before(today)) {
+        LocalDateTime today =  LocalDateTime.now();
+        if (purchase.getCoupon().getEndDate().isBefore(today)) {
             throw new ApplicationException(ErrorType.PURCHASE_FAILED_COUPON_EXPIRED, " purchase process failed - coupon expired");
         }
-        if (purchase.getCoupon().getStartDate().after(today)) {
+        if (purchase.getCoupon().getStartDate().isAfter(today)) {
             throw new ApplicationException(ErrorType.PURCHASE_FAILED_COUPON_EXPIRED, " purchase process failed - coupon is not valid yet");
         }
         List<PurchaseBean> customerPurchasesList = new ArrayList<PurchaseBean>();

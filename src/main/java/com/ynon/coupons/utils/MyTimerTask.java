@@ -1,5 +1,6 @@
 package com.ynon.coupons.utils;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.TimerTask;
 
@@ -19,7 +20,7 @@ public class MyTimerTask extends TimerTask {
 
 	@Override
 	public void run() {
-		Date date = new Date();
+		LocalDateTime date =  LocalDateTime.now();
 		try {
 			couponsController.removeOldCoupons(date);
 		} catch (ApplicationException e) {

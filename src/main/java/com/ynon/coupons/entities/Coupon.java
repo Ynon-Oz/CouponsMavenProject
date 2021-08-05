@@ -1,6 +1,7 @@
 package com.ynon.coupons.entities;
 
 import java.sql.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -43,9 +44,9 @@ public class Coupon {
 	@Column(name = "id")
 	@JsonProperty("id")
 	private long id;
-	@NotNull
+//	@NotNull
 	@JoinColumn(name = "companyId")//, insertable = false, updatable = false)
-	@ManyToOne (fetch = FetchType.LAZY)
+	@ManyToOne (fetch = FetchType.LAZY , cascade = CascadeType.PERSIST)
 	private Company company;
 
 	//TODO Change CouponCategory to Entity
@@ -61,10 +62,10 @@ public class Coupon {
 	private String description;
 //	@PastOrPresent
 	@Column(name = "startDate",  nullable = false)
-	private Date startDate;
+	private LocalDateTime startDate;
 //	@FutureOrPresent
 	@Column(name = "endDate",  nullable = false)
-	private Date endDate;
+	private LocalDateTime endDate;
 	@Positive
 	@Column(name = "amount",  nullable = false)
 	private int amount;
@@ -85,8 +86,8 @@ public class Coupon {
 	
 
 
-	public Coupon(long id, Company company, CouponCategory type, String title, String description, Date startDate,
-			Date endDate, int amount, float price, String image) {
+	public Coupon(long id, Company company, CouponCategory type, String title, String description, LocalDateTime startDate,
+				  LocalDateTime endDate, int amount, float price, String image) {
 		this.id = id;
 		this.company = company;
 		this.type = type;
@@ -100,23 +101,23 @@ public class Coupon {
 		this.purchases = null;
 	}
 
-	public Coupon(long id, Company company, CouponCategory type, String title, String description, java.util.Date startDate,
-			java.util.Date endDate, int amount, float price, String image) {
-		this.id = id;
-		this.company = company;
-		this.type = type;
-		this.title = title;
-		this.description = description;
-		this.startDate = DateUtils.convetDateFromUtilToSql(startDate);
-		this.endDate = DateUtils.convetDateFromUtilToSql(endDate);
-		this.amount = amount;
-		this.price = price;
-		this.image = image;
-		this.purchases = null;
-	}
+//	public Coupon(long id, Company company, CouponCategory type, String title, String description, LocalDateTime startDate,
+//				  LocalDateTime endDate, int amount, float price, String image) {
+//		this.id = id;
+//		this.company = company;
+//		this.type = type;
+//		this.title = title;
+//		this.description = description;
+//		this.startDate = startDate;
+//		this.endDate = endDate;
+//		this.amount = amount;
+//		this.price = price;
+//		this.image = image;
+//		this.purchases = null;
+//	}
 
 
-	public Coupon(Company company, CouponCategory type, String title, String description, Date startDate, Date endDate,
+	public Coupon(Company company, CouponCategory type, String title, String description, LocalDateTime startDate, LocalDateTime endDate,
 			int amount, float price, String image) {
 		this.company = company;
 		this.type = type;

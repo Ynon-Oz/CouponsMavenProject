@@ -1,5 +1,6 @@
 package com.ynon.coupons.cli;
 
+import com.ynon.coupons.entities.Company;
 import com.ynon.coupons.logic.CompanysController;
 import com.ynon.coupons.services.FactoryService;
 import org.springframework.beans.factory.annotation.Autowired;

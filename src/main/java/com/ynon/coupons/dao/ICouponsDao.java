@@ -1,6 +1,7 @@
 package com.ynon.coupons.dao;
 
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -25,7 +26,7 @@ public interface ICouponsDao extends JpaRepository<Coupon, Long> {
 	@Modifying
 	@Transactional
 	@Query("DELETE FROM Coupon c WHERE c.endDate < :date")
-	public void removeOldCoupons(@Param("date")Date date);
+	public void removeOldCoupons(@Param("date") LocalDateTime date);
 
 	@Query("SELECT new com.ynon.coupons.beans.javabeans.CouponBean(c.id, c.company.companyId, c.type, c.title, c.description,  c.startDate, c.endDate , c.amount, c.price,  c.image) FROM Coupon c WHERE c.company.companyId= :compId")
 	public List<CouponBean> getCouponsByCompanyId(@Param("compId") long companyId);

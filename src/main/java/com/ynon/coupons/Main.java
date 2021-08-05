@@ -1,10 +1,13 @@
 package com.ynon.coupons;
 
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.sql.Date;
 import java.util.List;
 
+import com.ynon.coupons.services.FactoryService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -36,12 +39,16 @@ public class Main {
 		UsersController usersController = ctx.getBean(UsersController.class);
 		// Creating  Companies
 		log.info("Creating companies");
-		Company comp1 = new Company("Coca Cola","32 Akiva st Bney Brak","03-6432166","03-6432100","www.coca-cola.co.il",null,null);
-		Company comp2 = new Company("ZARA","57 Haruv st Herzlya","09-9517654","09-9517653","www.zara.co.il",null,null);
-		Company comp3 = new Company("ZARA","57 Haruv st Herzlya","09-9517654","09-9517653","www.zara.co.il",null,null);
-
-		Date startDate = new Date(120, 0, 1); //(years since 1900, month 0-11, day 1-31)
-		Date endDate = new Date(122, 11, 31);
+		Company comp1 = new Company("Coca Cola","32 Akiva st Bney Brak","03-6432166","03-6432100","www.coca-cola.co.il");
+		Company comp2 = new Company("ZARA","57 Haruv st Herzlya","09-9517654","09-9517653","www.zara.co.il");
+		Company comp3 = new Company("ZARA","57 Haruv st Herzlya","09-9517654","09-9517653","www.zara.co.il");
+		
+		String str1 = "2021-01-01 12:30";
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime startDate = LocalDateTime.parse(str1, formatter);
+		String str2 = "2021-01-01 12:30";
+		DateTimeFormatter formatter2 = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
+		LocalDateTime endDate = LocalDateTime.parse(str2, formatter2);
 		// Creating Coupons
 		log.info("Creating coupons");
 		Coupon c1 = new Coupon(comp1,CouponCategory.FOOD,"Manceasss","Fistukim",startDate,endDate,150,9.9f,"fistuk.jpg");
@@ -78,7 +85,7 @@ public class Main {
 		usersController.addUser(u1);
 		companiesDao.save(comp1);
 		companiesDao.save(comp2);
-
+		companiesDao.saveAll(new FactoryService().companies(40));
 		log.info("***** Loading completed *****");
 
 

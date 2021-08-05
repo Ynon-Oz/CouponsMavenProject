@@ -1,5 +1,6 @@
 package com.ynon.coupons.beans.javabeans;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 public class PurchaseBean {
@@ -7,16 +8,16 @@ public class PurchaseBean {
 	private Long costumerId;
 	private Long couponId;
 	private int amount;
-	private Date timeStamp;
+	private LocalDateTime timeStamp;
 
-	public PurchaseBean(long costumerId, long couponId, int amount, Date timeStamp) {
+	public PurchaseBean(long costumerId, long couponId, int amount, LocalDateTime timeStamp) {
 		this.costumerId = costumerId;
 		this.couponId = couponId;
 		this.amount = amount;
 		this.timeStamp = timeStamp;
 	}
 
-	public PurchaseBean(long id, long costumerId, long couponId, int amount, Date timeStamp) {
+	public PurchaseBean(long id, long costumerId, long couponId, int amount, LocalDateTime timeStamp) {
 		this(costumerId, couponId, amount, timeStamp);
 		this.id = id;
 	}
@@ -56,11 +57,11 @@ public class PurchaseBean {
 		this.amount = amount;
 	}
 
-	public Date getTimeStamp() {
+	public LocalDateTime getTimeStamp() {
 		return timeStamp;
 	}
 
-	public void setTimeStamp(Date timeStamp) {
+	public void setTimeStamp(LocalDateTime timeStamp) {
 		this.timeStamp = timeStamp;
 	}
 

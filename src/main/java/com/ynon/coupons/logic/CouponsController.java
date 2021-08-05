@@ -1,5 +1,6 @@
 package com.ynon.coupons.logic;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -124,7 +125,7 @@ public class CouponsController {
 
     @Transactional
 //	@Scheduled (fixedRate = )
-    public void removeOldCoupons(Date date) throws ApplicationException {
+    public void removeOldCoupons(LocalDateTime date) throws ApplicationException {
         try {
             couponsDao.removeOldCoupons(date);
         } catch (Exception e) {
