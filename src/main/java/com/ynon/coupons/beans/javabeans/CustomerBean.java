@@ -1,6 +1,12 @@
 package com.ynon.coupons.beans.javabeans;
 
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class CustomerBean {
 
 	private long id;
@@ -9,9 +15,7 @@ public class CustomerBean {
 	private String phone;
 	private String address;
 
-	public CustomerBean() {
 
-	}
 
 	public CustomerBean( String firstName, String lastName, String phone, String address) {
 		this.firstName = firstName;
@@ -19,60 +23,6 @@ public class CustomerBean {
 		this.phone = phone;
 		this.address = address;
 	}
-
-	public CustomerBean(long userId,  String firstName, String lastName, String phone, String address) {
-		this(  firstName,  lastName,  phone,  address);
-		this.id = userId;
-	}
-
-	public long getUserId() {
-		return id;
-	}
-
-	public void setUserId(long userId) {
-		this.id = userId;
-	}
-
-	
-
-	public String getFirstName() {
-		return firstName;
-	}
-
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-
-	public String getLastName() {
-		return lastName;
-	}
-
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
-	}
-
-	public String getPhone() {
-		return phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	@Override
-	public String toString() {
-		return "CustomerBean [id=" + id  + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", phone=" + phone + ", address=" + address + "]";
-	}
-
 
 
 

@@ -1,7 +1,11 @@
 package com.ynon.coupons.logic;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+import com.ynon.coupons.entities.User;
+import com.ynon.coupons.mapper.CompaniesMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.ynon.coupons.beans.javabeans.CompanyBean;
@@ -16,6 +20,8 @@ public class CompanysController {
 
     @Autowired
     private ICompaniesDao companiesDao;
+    @Autowired
+    private CompaniesMapper companiesMapper;
 
 
     public CompanysController() {
@@ -24,13 +30,14 @@ public class CompanysController {
     //ADD
     public Company addCompany(Company company) throws ApplicationException {
         validations(company);
+        System.out.println("************************"+company+"******************");
         return this.companiesDao.save(company);
     }
 
 
     //GET
     public CompanyBean getCompanyById(long companyId) throws ApplicationException {
-        return this.companiesDao.getCompanyById(companyId);
+        return companiesMapper.toDto(this.companiesDao.getOne(companyId));
     }
 
     public Company getCompanyFindById(long companyId) throws ApplicationException {
@@ -38,19 +45,20 @@ public class CompanysController {
     }
 
     public List<CompanyBean> getAllCompanies() throws ApplicationException {
-        return this.companiesDao.getAllCompanies();
+        List<Company> entities = this.companiesDao.findAll();
+        List<CompanyBean> resList = (ArrayList)entities.stream().collect(Collectors.toCollection(ArrayList::new));
+        return resList;
     }
 
     //UPDATE
-    public long updateCompany(Company company) throws ApplicationException {
-        Company updated = new Company();
-        updated = this.companiesDao.getOne(company.getCompanyId());
+    public Company updateCompany(long id, Company company) throws ApplicationException {
+        Company updated = this.companiesDao.getOne(id);
         //TODO ???????  -----> Where do i get the id from? <------ ???????
-        updated.setCompanyAddress(company.getCompanyAddress());
-        updated.setCompanyFaxNumber(company.getCompanyFaxNumber());
-        updated.setCompanyPhoneNumber(company.getCompanyPhoneNumber());
-        updated.setCompanyWebSite(company.getCompanyWebSite());
-        return this.companiesDao.saveAndFlush(updated).getCompanyId();
+        updated.setAddress(company.getAddress());
+        updated.setEmail(company.getEmail());
+        updated.setPhone(company.getPhone());
+        updated.setWebsite(company.getWebsite());
+        return this.companiesDao.saveAndFlush(updated);
     }
 
 
@@ -67,19 +75,19 @@ public class CompanysController {
             throw new ApplicationException(ErrorType.COMPANY_MISMATCH, "Company details are missing");
         }
 
-        if (company.getCompanyName().length() < 2) {
+        if (company.getName().length() < 2) {
             throw new ApplicationException(ErrorType.COMPANY_NAME_SHORT, "Company name too short");
 
         }
 
-        if (existsByName(company.getCompanyName())) {
+        if (existsByName(company.getName())) {
             throw new ApplicationException(ErrorType.INVALID_COMPANY, "Company already exist");
         }
     }
 
     private boolean existsByName(String companyName) {
         Company c = new Company();
-        c = companiesDao.findByCompanyName(companyName);
+        c = companiesDao.findByName(companyName);
         if (c == null) {
             return false;
         }
@@ -87,4 +95,7 @@ public class CompanysController {
     }
 
 
+    public boolean isExistById(long companyId) {
+        return companiesDao.existsById(companyId);
+    }
 }

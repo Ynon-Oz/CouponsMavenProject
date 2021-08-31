@@ -3,6 +3,7 @@ package com.ynon.coupons.logic;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import com.ynon.coupons.mapper.UsersMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -13,6 +14,8 @@ import com.ynon.coupons.dao.IUsersDao;
 import com.ynon.coupons.entities.User;
 import com.ynon.coupons.enums.ErrorType;
 import com.ynon.coupons.exceptions.ApplicationException;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Slf4j
@@ -22,25 +25,44 @@ public class UsersController {
     private IUsersDao usersDao;
     @Autowired
     private CacheController cacheController;
+    @Autowired
+    private UsersMapper mapper;
 
     //CREATE  -  ADD
-    public long addUser(User user) throws ApplicationException {
-        user.setUserName(user.getUserName().trim().toLowerCase());
+    public ResponseEntity<?> addUser(User user) throws ApplicationException {
+        user.setEmail(user.getEmail().toLowerCase());
         userValidations(user);
-        if (isUserExist(user.getUserName())) {
+        if (isUserExist(user.getEmail())) {
             throw new ApplicationException(ErrorType.USER_ALREADY_EXIST, ErrorType.USER_ALREADY_EXIST.getErrorMessage());
         }
         user.setPassword(obfuscation(user.getPassword()));
-        log.info("User " + user.getUserName() + " is adding to DB");
-        return usersDao.save(user).getId();
+        log.info("User " + user.getEmail() + " is adding to DB");
+        return new ResponseEntity<>((User) usersDao.save((user)), HttpStatus.CREATED);
+    }
+    public ResponseEntity<?> addUser(UserBean dto) throws ApplicationException {
+        User user = mapper.toDao(dto);
+        System.out.println("dto: "+dto.getCompanyId());
+        System.out.println("Dao: "+user.getCompany().getId());
+        user.setEmail(user.getEmail().toLowerCase());
+        userValidations(user);
+        if (isUserExist(user.getEmail())) {
+            throw new ApplicationException(ErrorType.USER_ALREADY_EXIST, ErrorType.USER_ALREADY_EXIST.getErrorMessage());
+        }
+        user.setPassword(obfuscation(user.getPassword()));
+        log.info("User " + user.getEmail() + " is adding to DB");
+        return new ResponseEntity<>(usersDao.save((user)), HttpStatus.CREATED);
     }
 
 
     //UPDATE
-    public long updateUser(User user) throws ApplicationException {
-        userValidations(user);
-        user.setPassword(obfuscation(user.getPassword()));
-        return this.usersDao.save(user).getId();
+    public ResponseEntity<?> updateUser(long id, User user) throws ApplicationException {
+        if (usersDao.existsById(id)) {
+            userValidations(user);
+//            User update = usersDao.getOne(id);
+            user.setPassword(obfuscation(user.getPassword()));
+            return new ResponseEntity<User>(this.usersDao.save(user), HttpStatus.CREATED);
+        }
+        return new ResponseEntity<>(HttpStatus.NOT_MODIFIED);
     }
 
 
@@ -56,7 +78,7 @@ public class UsersController {
 
 
     public List<User> findUsersByCompany(long companyId) {
-        return this.usersDao.findByCompanyOrderByUserName(companyId);
+        return this.usersDao.findByCompanyOrderByEmail(companyId);
     }
 
 
@@ -94,6 +116,7 @@ public class UsersController {
 
 
     //EMAIL VALIDATION
+
     /**
      * Email Validation have been changed to  javax.validation.constraints.Email at entity User.class;
      */
@@ -109,7 +132,7 @@ public class UsersController {
 
         userLoginDetails.setPassword(obfuscation(userLoginDetails.getPassword()));
         User user = new User();
-        user = usersDao.findByUserName(userLoginDetails.getUserName());
+        user = usersDao.findByEmail(userLoginDetails.getUserName());
         if (user == null) {
             throw new ApplicationException(ErrorType.WRONG_USERNAME_OR_PASSWORD, ErrorType.WRONG_USERNAME_OR_PASSWORD.getErrorMessage());
         }
@@ -125,15 +148,15 @@ public class UsersController {
 
     //	TOKEN GENERATOR
     private String generateToken(UserLoginDetails userLoginDetails) {
-        String token = (userLoginDetails.getUserName().hashCode() + "-" + userLoginDetails.getPassword().hashCode()) + LocalDateTime.now()+
-        "";
+        String token = (userLoginDetails.getUserName().hashCode() + "-" + userLoginDetails.getPassword().hashCode()) + LocalDateTime.now() +
+                "";
         return token;
     }
 
 
     public boolean isUserExist(String userName) {
         User u = new User();
-        u = this.usersDao.findByUserName(userName);
+        u = this.usersDao.findByEmail(userName);
         if (u == null) {
             return false;
         }
@@ -145,7 +168,7 @@ public class UsersController {
         User user = usersDao.getOne(id);
         user.setActivated(true);
         usersDao.saveAndFlush(user);
-        log.info("User " + user.getUserName() + " has been activated his account", user.getUserName());
+        log.info("User " + user.getEmail() + " has been activated his account", user.getEmail());
 
     }
 

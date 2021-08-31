@@ -1,28 +1,15 @@
 package com.ynon.coupons.entities;
 
-import java.sql.Date;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.ynon.coupons.enums.CouponsCategory.CouponCategory;
-import com.ynon.coupons.utils.DateUtils;
+import com.ynon.coupons.enums.CouponCategory;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -40,7 +27,7 @@ import org.springframework.validation.annotation.Validated;
 public class Coupon {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	@JsonProperty("id")
 	private long id;
@@ -53,12 +40,12 @@ public class Coupon {
 
 	@Column(name = "category", nullable = false)
 	@Enumerated(EnumType.STRING)
-	private CouponCategory type; 
+	private CouponCategory type;
 	@Size(min = 2, max=22)
-	@Column(name = "title",  nullable = false)
+	@Column(name = "title",  nullable = false, length = 30)
 	private String title;
 	@NotBlank
-	@Column(name = "description", nullable = false)
+	@Column(name = "description", nullable = false, length = 50)
 	private String description;
 //	@PastOrPresent
 	@Column(name = "startDate",  nullable = false)
@@ -73,8 +60,10 @@ public class Coupon {
 	@Column(name = "price",  nullable = false)
 	private float price;
 	//TODO Change to object to enable saving images
-	@Column(name = "image")
+	@Column(name = "image", length = 30)
 	private String image;
+//	@JsonProperty(value = "image")
+//	private UUID image;
 
 	@OneToMany(mappedBy = "coupon", cascade = CascadeType.REMOVE)
 	@JsonIgnore
@@ -101,20 +90,7 @@ public class Coupon {
 		this.purchases = null;
 	}
 
-//	public Coupon(long id, Company company, CouponCategory type, String title, String description, LocalDateTime startDate,
-//				  LocalDateTime endDate, int amount, float price, String image) {
-//		this.id = id;
-//		this.company = company;
-//		this.type = type;
-//		this.title = title;
-//		this.description = description;
-//		this.startDate = startDate;
-//		this.endDate = endDate;
-//		this.amount = amount;
-//		this.price = price;
-//		this.image = image;
-//		this.purchases = null;
-//	}
+
 
 
 	public Coupon(Company company, CouponCategory type, String title, String description, LocalDateTime startDate, LocalDateTime endDate,

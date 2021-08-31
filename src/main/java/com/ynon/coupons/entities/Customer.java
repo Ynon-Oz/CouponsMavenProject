@@ -34,19 +34,19 @@ public class Customer  {
 	@MapsId
 //	@JsonIgnore
 //	@JoinColumn(name = "userId")
-	@OneToOne (fetch = FetchType.EAGER, cascade = {CascadeType.REMOVE,CascadeType.PERSIST})
+	@OneToOne (fetch = FetchType.EAGER, cascade = CascadeType.ALL)
 	private User user;
 	@Size (min=2,max=20,message = "First name should contain 2-20 characters")
-	@Column(name = "firstName",  nullable = false)
+	@Column(name = "firstName",  nullable = false, length = 30)
 	private String firstName;
 
-	@Column(name = "lastName",  nullable = false)
+	@Column(name = "lastName",  nullable = false, length = 30)
 	private String lastName;
 
-	@Column(name = "phone", nullable = false)
+	@Column(name = "phone", nullable = false, length = 30)
 	private String phone;
 	//TODO divide to City, Street, House#, Apartment, Zip and use Third Party API to detect inputs
-	@Column(name = "address", nullable = false)
+	@Column(name = "address", nullable = false, length = 30)
 	private String address;
 	
 	@JsonIgnore

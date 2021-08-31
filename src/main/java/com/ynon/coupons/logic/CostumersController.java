@@ -13,8 +13,9 @@ import com.ynon.coupons.dao.ICustomersDao;
 import com.ynon.coupons.entities.Customer;
 import com.ynon.coupons.enums.ErrorType;
 import com.ynon.coupons.exceptions.ApplicationException;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 
 @Service
@@ -29,8 +30,9 @@ public class CostumersController {
 
 
     //CREATE
+    @Transactional
     public void addCostumer(Customer customer) throws ApplicationException {
-        if (this.usersController.isUserExist(customer.getUser().getUserName())) {
+        if (this.usersController.isUserExist(customer.getUser().getEmail())) {
             throw new ApplicationException(ErrorType.USER_ALREADY_EXIST, ErrorType.USER_ALREADY_EXIST.getErrorMessage());
         }
         /**
@@ -44,10 +46,16 @@ public class CostumersController {
 
         this.customersDao.save(customer);
         //TODO register confirmation Email
+        sendConfirmationMail(customer);
+
+    }
+
+    private void sendConfirmationMail(Customer customer){
+
         EmailMessage confirmationEmail = new EmailMessage();
         confirmationEmail.setFromName(Config.ORGANIZATION_NAME+" Team");
         confirmationEmail.setSubject(EmailMessages.SUBJECT_NEW_USER_REGISTRATION);
-        confirmationEmail.setToEmail(customer.getUser().getUserName());
+        confirmationEmail.setToEmail(customer.getUser().getEmail());
         confirmationEmail.setToName(customer.getFirstName() + " " + customer.getLastName());
         String message =
                 String.format(
@@ -57,6 +65,7 @@ public class CostumersController {
                         customer.getUser().getId());
         confirmationEmail.setMessage(message);
         emailService.sendEmail(confirmationEmail);
+
     }
 
     /**

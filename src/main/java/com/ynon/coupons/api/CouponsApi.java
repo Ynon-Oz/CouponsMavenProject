@@ -1,17 +1,16 @@
 package com.ynon.coupons.api;
 
+import java.io.IOException;
 import java.util.List;
 
+import com.ynon.coupons.beans.javabeans.UploadCouponDTO;
+import com.ynon.coupons.logic.ImagesController;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
 import com.ynon.coupons.beans.javabeans.CouponBean;
 import com.ynon.coupons.entities.Coupon;
@@ -20,24 +19,37 @@ import com.ynon.coupons.logic.CouponsController;
 
 
 @RestController
-@RequestMapping("/coupons")
+@RequestMapping("/coupon")
+@RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000", allowedHeaders = "*")
+
 public class CouponsApi {
 
-	@Autowired
-	CouponsController couponsController;
-
+	private final CouponsController couponsController;
+	private final ImagesController imageService;
 
 	//CREATE
 	@PostMapping
-	public void addCoupon(@RequestBody CouponBean coupon) throws ApplicationException {
-		this.couponsController.addCoupon(coupon);	
+	@ResponseStatus(HttpStatus.CREATED)
+	public ResponseEntity<?> addCoupon(@RequestBody CouponBean payload) throws ApplicationException {
+		return this.couponsController.addCoupon(payload);
 	}
+
+//	@PostMapping(
+//			consumes = {MediaType.MULTIPART_FORM_DATA_VALUE},
+//			produces = {MediaType.APPLICATION_JSON_VALUE}
+//	)
+//	@ResponseStatus(HttpStatus.CREATED)
+//	public  @ResponseBody CouponBean addCoupon(@ModelAttribute UploadCouponDTO payload) throws ApplicationException, IOException {
+//	void addCoupon(@RequestBody CouponBean coupon) throws ApplicationException {
+//		return null;//this.couponsController.addCoupon(payload);
+//	}
 
 
 	//UPDATE
-	@PutMapping
-	public void updateCoupon(@RequestBody CouponBean coupon) throws ApplicationException {
-		this.couponsController.updateCoupon(coupon, coupon.getId());
+	@PutMapping("/{id}")
+	public void updateCoupon(@PathVariable long id, @RequestBody CouponBean coupon) throws ApplicationException {
+		this.couponsController.updateCoupon(coupon, id);
 	}
 
 
@@ -54,10 +66,10 @@ public class CouponsApi {
 	}
 
 	//GET ALL BY COMPANT ID
-	@GetMapping("/byCompany")
-	public List<Coupon> getCouponsByCompanyId(@RequestParam("company") long comapnyId)throws ApplicationException{
-		return this.couponsController.getByCompanyId(comapnyId);
-	}
+//	@GetMapping("/byCompany")
+//	public List<Coupon> getCouponsByCompanyId(@RequestParam("company") long comapnyId)throws ApplicationException{
+//		return this.couponsController.getByCompanyId(comapnyId);
+//	}
 
 	//GET ALL BY MAX PRICE
 	@GetMapping("/byPrice")

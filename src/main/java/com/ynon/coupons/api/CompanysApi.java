@@ -2,6 +2,7 @@ package com.ynon.coupons.api;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,9 +23,10 @@ import com.ynon.coupons.logic.CompanysController;
 //
 @RestController
 @RequestMapping("/company")
+@RequiredArgsConstructor
 public class CompanysApi {
 	@Autowired
-	CompanysController companysController;
+	private final CompanysController companysController;
 
 //TODO @RequestBody for sensitive info, and @PathVariable for coupons only
 
@@ -36,9 +38,9 @@ public class CompanysApi {
 
 
 	//UPDATE
-	@PutMapping
-	public long updateCompany(@RequestBody Company company) throws ApplicationException {
-		return this.companysController.updateCompany(company);
+	@PutMapping("/{id}")
+	public Company updateCompany(@RequestBody Company company, @PathVariable long id) throws ApplicationException {
+		return this.companysController.updateCompany(id, company);
 	}
 
 

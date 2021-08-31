@@ -2,6 +2,8 @@ package com.ynon.coupons.api;
 
 import java.util.List;
 
+import com.ynon.coupons.enums.CouponCategory;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,18 +15,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ynon.coupons.beans.javabeans.PurchaseBean;
-import com.ynon.coupons.enums.CouponsCategory.CouponCategory;
+import com.ynon.coupons.enums.CouponCategory;
 import com.ynon.coupons.exceptions.ApplicationException;
 import com.ynon.coupons.logic.PurchasesController;
 
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/purchase")
 public class PurchasesApi {
 
 
-	@Autowired
-	private PurchasesController purchasesController;
+	private final PurchasesController purchasesController;
 
 	@PostMapping
 	public void addPurchase(@RequestBody PurchaseBean purchase) throws ApplicationException {
@@ -49,7 +51,7 @@ public class PurchasesApi {
 	}
 	
 	@GetMapping("/byCustomerAndType")
-	public List<PurchaseBean> getAllByCustomerIdAndType(@RequestParam("customerId")long id, @RequestParam("category")CouponCategory type) throws ApplicationException{
+	public List<PurchaseBean> getAllByCustomerIdAndType(@RequestParam("customerId")long id, @RequestParam("category") CouponCategory type) throws ApplicationException{
 		return this.purchasesController.getAllByCustomerIdAndType(id,type);
 	}
 	

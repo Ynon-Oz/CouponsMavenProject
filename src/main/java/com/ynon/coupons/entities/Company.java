@@ -2,21 +2,11 @@ package com.ynon.coupons.entities;
 
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Entity
 @Table(name = "Companies")
@@ -28,29 +18,31 @@ import lombok.NoArgsConstructor;
 
 public class Company {
     @Id
-    @GeneratedValue
+    @GeneratedValue (strategy = GenerationType.IDENTITY)
     @Column(name = "companyID")
-    private long companyId;
+    private long id;
 
-    @Column(name = "Name", /*unique = true,*/ nullable = false)
-    private String companyName;
+    @Column(name = "Name", /*unique = true,*/ nullable = false, length = 30)
+    private String name;
 
-    @Column(name = "Address", nullable = false)
-    private String companyAddress;
+    @Column(name = "Address", nullable = false, length = 30)
+    private String address;
 
-    @Column(name = "PhoneNum", unique = true, nullable = false)
-    private String companyPhoneNumber;
+    @Column(name = "PhoneNum", unique = true, nullable = false, length = 30)
+    private String phone;
 
-    @Column(name = "FaxNum", unique = true)
-    private String companyFaxNumber;
+    @Column(name = "Email", unique = true, length = 40)
+    private String email;
 
-    @Column(name = "webSite", unique = true)
-    private String companyWebSite;
-
+    @Column(name = "webSite", unique = true, length = 30)
+    private String website;
+    @Singular
     @JsonIgnore
+    @ToString.Exclude
     @OneToMany(mappedBy = "company", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private List<Coupon> coupons;
-
+    @ToString.Exclude
+    @Singular
     @JsonIgnore
     @OneToMany(mappedBy = "company", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, fetch = FetchType.LAZY)
     private List<User> users;
@@ -58,11 +50,11 @@ public class Company {
 
     public Company(String name, String address, String phone, String fax, String web) {
         super();
-        this.companyName = name;
-        this.companyAddress = address;
-        this.companyPhoneNumber = phone;
-        this.companyFaxNumber = fax;
-        this.companyWebSite = web;
+        this.name = name;
+        this.address = address;
+        this.phone = phone;
+        this.email = fax;
+        this.website = web;
     }
 }
 

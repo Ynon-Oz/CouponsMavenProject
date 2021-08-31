@@ -1,7 +1,13 @@
 package com.ynon.coupons.beans;
 
 import com.ynon.coupons.enums.UserType;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class PostUserData {
 
 
@@ -10,29 +16,13 @@ public class PostUserData {
 	private UserType userType;
 
 
-	public PostUserData(long id, Long companyId, UserType userType) {
-		this(id,userType);
-		this.companyId = companyId;
-	}
+
 
 	public PostUserData(long id, UserType userType) {
 		this.id = id;
 		this.companyId = null;
 		this.userType = userType;
 	}
-
-	public long getId() {
-		return id;
-	}
-
-	public Long getCompanyId() {
-		return companyId;
-	}
-
-	public UserType getUserType() {
-		return userType;
-	}
-
 
 
 }

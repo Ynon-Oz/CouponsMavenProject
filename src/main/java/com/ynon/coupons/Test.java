@@ -10,8 +10,8 @@ import java.util.List;
 public class Test {
     public static void main(String[] args) {
 
-        FactoryService factoryService = new FactoryService();
-        factoryService.companies(40).forEach(System.out::println);
+//        FactoryService factoryService = new FactoryService();
+//        factoryService.companies(40).forEach(System.out::println);
 //        factoryService.coupons(40).forEach(System.out::println);
 
 

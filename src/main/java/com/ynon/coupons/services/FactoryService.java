@@ -1,9 +1,9 @@
 package com.ynon.coupons.services;
 
+import com.ynon.coupons.dao.ICompaniesDao;
 import com.ynon.coupons.entities.Company;
 import com.ynon.coupons.entities.Coupon;
-import com.ynon.coupons.enums.CouponsCategory;
-import javafx.util.converter.LocalDateTimeStringConverter;
+import com.ynon.coupons.enums.CouponCategory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
@@ -18,8 +18,10 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FactoryService {
 
+    private final ICompaniesDao companiesDao;
 
-    //    private static int amountOfObjects = 40;
+//    private List<Company> companies = companiesDao.findAll();
+
     public enum ObjType {
         COMPANY,
         COUPON,
@@ -42,7 +44,6 @@ public class FactoryService {
         for (int i = 0; i < amountOfObjects; i++) {
             coupons.add(coupon(i));
         }
-//        coupons.forEach(c -> c.setCompanyWebSite(webAddGenerator(c.getCompanyName())));
         return coupons;
     }
 
@@ -52,19 +53,18 @@ public class FactoryService {
         for (int i = 0; i < amountOfObjects; i++) {
             companies.add(company(i));
         }
-        companies.forEach(c -> c.setCompanyWebSite(webAddGenerator(c.getCompanyName())));
+        companies.forEach(c -> c.setWebsite(webAddGenerator(c.getName())));
         return companies;
     }
 
     private Company company(int i) {
         return Company.builder()
-                .companyName(StringRandomValue(names, i))
-                .companyAddress(StringRandomValue(addresses, null))
-                .companyPhoneNumber(phoneFaxGenerator())
-                .companyFaxNumber(phoneFaxGenerator())
-//                .companyWebSite(webAddGenerator("A"))
-                .coupons(coupons((int)(Math.random()*10)+1))
-                .users(null)
+                .name(StringRandomValue(names, i))
+                .address(StringRandomValue(addresses, null))
+                .phone(phoneFaxGenerator())
+                .email(phoneFaxGenerator())
+//                .users(null)
+                .coupons(coupons((int)Math.random()*5))
                 .build();
     }
 
@@ -91,7 +91,7 @@ public class FactoryService {
             "67 Shalom st Tel-Aviv",
             "78 Ela st Haifa",
             "26 Kalanit st Rishon",
-            "13 Yefet st Ramat Hasharon",
+            "13 Yeet st Ramat Hasharon",
             "59 Tamuz st Beer Sheva",
             "333 Bar-Kochva st Afula",
             "12 1230 st Tel-Aviv",
@@ -127,9 +127,10 @@ public class FactoryService {
                 .type(addCouponType())
                 .amount((int) (Math.random() * 101)+10)
                 .price((float) (Math.random() * 101)+10)
-                .startDate(generateDate(0))
+                .startDate(LocalDateTime.now())
                 .endDate(generateDate(1))
-                .image("burger.jpg")
+                .image("pic.jpg")
+//                .company(companiesDao.getOne(1l))
                 .build();
     }
 
@@ -152,8 +153,8 @@ public class FactoryService {
 
     }
 
-    private CouponsCategory.CouponCategory addCouponType() {
-        return CouponsCategory.CouponCategory.FOOD;
+    private CouponCategory addCouponType() {
+        return CouponCategory.FOOD;
     }
 
     private String addCouponDescription() {

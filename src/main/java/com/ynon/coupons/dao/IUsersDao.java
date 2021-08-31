@@ -13,31 +13,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface IUsersDao extends JpaRepository<User, Long> {
 
+    public User findByEmail(String name);
+
+    public List<User> findByCompanyOrderByEmail(long companyId);
+
+    public List<User> findByCompany(String companyName);
+
+    @Query("SELECT new com.ynon.coupons.beans.javabeans.UserBean(u.id, u.email, u.password, c.id, u.type) FROM User u LEFT JOIN u.company c WHERE u.id=  :userId")
+    public UserBean getUserByUserId(@Param("userId") long userId);
+
+    @Query("SELECT new com.ynon.coupons.beans.javabeans.UserBean(u.id, u.email, u.password, c.id, u.type) FROM User u LEFT JOIN u.company c")
+    public List<UserBean> getAllUsers();
 
 
 
-	public User findByUserName(String name);
-
-	public List<User> findByCompanyOrderByUserName(long companyId);
-
-	public List<User> findByCompany(String companyName);
-
-	@Query("SELECT new com.ynon.coupons.beans.javabeans.UserBean(u.id, u.userName, u.password, c.companyId, u.type) FROM User u LEFT JOIN u.company c WHERE u.id=  :userId" )
-	public UserBean getUserByUserId(@Param ("userId") long userId);
-
-	@Query("SELECT new com.ynon.coupons.beans.javabeans.UserBean(u.id, u.userName, u.password, c.companyId, u.type) FROM User u LEFT JOIN u.company c")
-	public List<UserBean> getAllUsers();
-
-	
-
-//	@Query("SELECT userName FROM users WHERE EXISTS (SELECT userName FROM users WHERE userName= :userName)")
-//	public boolean isExistsByName(String userName);
-
-//	public boolean existsByUserName(String userName);
-
-
-
-	//	@Query("SELECT u FROM User u WHERE u.name= :userName and u.age= :age")
-	//	public List<User> getByData(@Param("userName") String name, @Param("age") int age);
 
 }

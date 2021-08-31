@@ -21,17 +21,17 @@ public interface ICouponsDao extends JpaRepository<Coupon, Long> {
 
 	public Coupon findById(long id);
 	
-	public List<Coupon> findByCompanyCompanyId (long id);
+	public List<Coupon> findByCompanyId (long id);
 
 	@Modifying
 	@Transactional
 	@Query("DELETE FROM Coupon c WHERE c.endDate < :date")
 	public void removeOldCoupons(@Param("date") LocalDateTime date);
 
-	@Query("SELECT new com.ynon.coupons.beans.javabeans.CouponBean(c.id, c.company.companyId, c.type, c.title, c.description,  c.startDate, c.endDate , c.amount, c.price,  c.image) FROM Coupon c WHERE c.company.companyId= :compId")
-	public List<CouponBean> getCouponsByCompanyId(@Param("compId") long companyId);
+//	@Query("SELECT new com.ynon.coupons.beans.javabeans.CouponBean(c.id, c.company.id, c.type, c.title, c.description,  c.startDate, c.endDate , c.amount, c.price,  c.image) FROM Coupon c WHERE c.company.id= :compId")
+//	public List<CouponBean> getCouponsByCompanyId(@Param("compId") long companyId);
 	
-	@Query("SELECT new com.ynon.coupons.entities.Coupon(c.id, c.company, c.type, c.title, c.description,  c.startDate, c.endDate , c.amount, c.price,  c.image) FROM Coupon c WHERE c.company.companyId= :compId AND c.price<= :mxPrice")
+	@Query("SELECT new com.ynon.coupons.entities.Coupon(c.id, c.company, c.type, c.title, c.description,  c.startDate, c.endDate , c.amount, c.price,  c.image) FROM Coupon c WHERE c.company.id= :compId AND c.price<= :mxPrice")
 	public List<Coupon> findByCompanyIdAndMaxPrice(@Param("compId")long companyId,@Param("mxPrice") float maxPrice);
 
 	

@@ -20,9 +20,8 @@ public class MyTimerTask extends TimerTask {
 
 	@Override
 	public void run() {
-		LocalDateTime date =  LocalDateTime.now();
 		try {
-			couponsController.removeOldCoupons(date);
+			couponsController.removeOldCoupons();
 		} catch (ApplicationException e) {
 			e.printStackTrace();
 		}

@@ -33,7 +33,10 @@ public enum ErrorType {
 	USER_CREATE_ERR(629,"Create User Failed",false),
 	WRONG_USERNAME_OR_PASSWORD(630,"Wrong user name or password", false), 
 	PURCHASE_FAILED_DOUBLE_PURCHASE(631,"can not purchase the same coupon twice",false), 
-	COUPON_TITLE_IS_ALREADY_EXISTS(632,"Coupon title is already exists, choose a different title",false);
+	COUPON_TITLE_IS_ALREADY_EXISTS(632,"Coupon title is already exists, choose a different title",false),
+	ID_NOT_EXIST(633,"Id Not Exist",false),
+	IMAGE_UPLOAD_FAILED(634,"IMAGE UPLOAD FAILED",false),
+	IMAGE_ID_NOT_FOUND(634,"IMAGE_ID_NOT_FOUND",false);
 
 
 

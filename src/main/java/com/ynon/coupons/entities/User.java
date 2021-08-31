@@ -3,44 +3,35 @@ package com.ynon.coupons.entities;
 
 
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.ynon.coupons.enums.UserType;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.validation.annotation.Validated;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Validated
 @Entity
+@Builder
 @Table(name="Users")
 public class User {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", nullable = false, unique = true)
 	private long id;
 
 	@Email
-	@Column( unique = true, nullable = true)
-	private String userName;
+	@Column( unique = true, nullable = true, length = 40)
+	private String email;
 
-	@Column(name = "PASSWORD", nullable = false)
+	@Column(name = "PASSWORD", nullable = false, length = 30)
 	private String password;
 	@JsonIgnore
+	@ToString.Exclude
 	@ManyToOne (fetch = FetchType.LAZY)
 	@JoinColumn(name = "companyID", nullable = true, unique = false)
 	private Company company;
@@ -53,8 +44,8 @@ public class User {
 
 
 
-	public User(String userName, String password, Company company, UserType type,boolean isActivated) {
-		this.userName = userName;
+	public User(String email, String password, Company company, UserType type, boolean isActivated) {
+		this.email = email;
 		this.password = password;
 		this.company = company;
 		this.type = type;

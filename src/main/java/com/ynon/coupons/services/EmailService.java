@@ -23,7 +23,7 @@ public class EmailService {
 
         log.info("Sending email message: {}",emailMessage);
 
-        emailSender.send(message);
+//        emailSender.send(message);
     }
 
 }

@@ -14,13 +14,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ICompaniesDao extends JpaRepository<Company, Long> {
 
-	@Query("SELECT new com.ynon.coupons.beans.javabeans.CompanyBean(companyId, companyName, companyAddress, companyPhoneNumber,companyFaxNumber,companyWebSite) FROM Company c WHERE c.companyId= :companyId")
-	CompanyBean getCompanyById(@Param("companyId")long companyId);
+//	@Query("SELECT new com.ynon.coupons.beans.javabeans.CompanyBean(id, name, address, phone, email, webSite) FROM Company c WHERE c.id= :companyId")
+//	CompanyBean getCompanyById(@Param("companyId")long companyId);
+//
+//	@Query("SELECT new com.ynon.coupons.beans.javabeans.CompanyBean(id, name, address, phone, email, webSite) FROM Company")
+//	List<CompanyBean> getAllCompanies();
 
-	@Query("SELECT new com.ynon.coupons.beans.javabeans.CompanyBean(companyId, companyName, companyAddress, companyPhoneNumber,companyFaxNumber,companyWebSite) FROM Company")
-	List<CompanyBean> getAllCompanies();
-
-	Company findByCompanyName(String companyName);
+	Company findByName(String companyName);
 
 //	boolean existsByName(String name);
 

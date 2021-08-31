@@ -1,10 +1,8 @@
 package com.ynon.coupons.logic;
 
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import com.ynon.coupons.beans.javabeans.EmailMessage;
@@ -16,12 +14,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import com.ynon.coupons.beans.javabeans.PurchaseBean;
 import com.ynon.coupons.dao.IPurchaseDao;
 import com.ynon.coupons.entities.Purchase;
-import com.ynon.coupons.enums.CouponsCategory.CouponCategory;
+import com.ynon.coupons.enums.CouponCategory;
 import com.ynon.coupons.enums.ErrorType;
 import com.ynon.coupons.exceptions.ApplicationException;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import javax.transaction.Transactional;
 
 @Transactional
@@ -52,7 +49,7 @@ private EmailService emailService;
         EmailMessage PurchaseEmail = new EmailMessage();
         PurchaseEmail.setFromName(Config.ORGANIZATION_NAME+" Team");
         PurchaseEmail.setSubject(EmailMessages.SUBJECT_PURCHASE_CONFIRMATION);
-        PurchaseEmail.setToEmail(purchase.getCustomer().getUser().getUserName());
+        PurchaseEmail.setToEmail(purchase.getCustomer().getUser().getEmail());
         PurchaseEmail.setToName(purchase.getCustomer().getFirstName() + " " + purchase.getCustomer().getLastName());
         String message =
                 String.format(

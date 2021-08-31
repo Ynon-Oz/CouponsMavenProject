@@ -2,7 +2,9 @@ package com.ynon.coupons.api;
 
 import java.util.List;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,11 +25,11 @@ import com.ynon.coupons.logic.UsersController;
 
 
 @RestController
-@RequestMapping("/users")
+@RequiredArgsConstructor
+@RequestMapping("/user")
 public class UsersApi {
 
-	@Autowired
-	private UsersController usersController;
+	private final UsersController usersController;
 
 	//	 http://localhost:8080/users/login
 	@PostMapping("/login")
@@ -38,14 +40,14 @@ public class UsersApi {
 
 	//CREATE
 	@PostMapping
-	public long addUser(@RequestBody User user) throws ApplicationException {
+	public ResponseEntity<?> addUser(@RequestBody UserBean user) throws ApplicationException {
 		return this.usersController.addUser(user);
 	}
 
 	//UPDATE
-	@PutMapping
-	public void updateUser(@RequestBody User user) throws ApplicationException {
-		this.usersController.updateUser(user);
+	@PutMapping("/{id}")
+	public ResponseEntity<?> updateUser(@PathVariable long id, @RequestBody User user) throws ApplicationException {
+		return this.usersController.updateUser(id, user);
 	}
 	//GET
 	@GetMapping("/{id}")

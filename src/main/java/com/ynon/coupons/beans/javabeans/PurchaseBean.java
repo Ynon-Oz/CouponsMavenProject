@@ -1,8 +1,10 @@
 package com.ynon.coupons.beans.javabeans;
 
+import lombok.Data;
+
 import java.time.LocalDateTime;
 import java.util.Date;
-
+@Data
 public class PurchaseBean {
 	private long id;
 	private Long costumerId;
@@ -25,50 +27,7 @@ public class PurchaseBean {
 	public PurchaseBean() {
 	}
 
-	public long getId() {
-		return id;
-	}
 
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	public long getCostumerId() {
-		return costumerId;
-	}
-
-	public void setCostumerId(long costumerId) {
-		this.costumerId = costumerId;
-	}
-
-	public long getCouponId() {
-		return couponId;
-	}
-
-	public void setCouponId(long couponId) {
-		this.couponId = couponId;
-	}
-
-	public int getAmount() {
-		return amount;
-	}
-
-	public void setAmount(int amount) {
-		this.amount = amount;
-	}
-
-	public LocalDateTime getTimeStamp() {
-		return timeStamp;
-	}
-
-	public void setTimeStamp(LocalDateTime timeStamp) {
-		this.timeStamp = timeStamp;
-	}
-
-	public String toString() {
-		return "Purchase [id=" + id + ", costumerId=" + costumerId + ", couponId=" + couponId + ", amount=" + amount
-				+ ", timeStamp=" + timeStamp + "]";
-	}
 
 
 }
