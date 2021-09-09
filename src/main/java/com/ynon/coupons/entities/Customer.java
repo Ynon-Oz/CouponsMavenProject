@@ -45,7 +45,7 @@ public class Customer  {
 
 	@Column(name = "phone", nullable = false, length = 30)
 	private String phone;
-	//TODO divide to City, Street, House#, Apartment, Zip and use Third Party API to detect inputs
+	//TODO divide to City, Street, House#, Apartment, Zip try to use Third Party API to detect inputs or implements DB
 	@Column(name = "address", nullable = false, length = 30)
 	private String address;
 	

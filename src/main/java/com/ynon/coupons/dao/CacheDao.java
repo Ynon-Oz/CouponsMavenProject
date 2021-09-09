@@ -26,8 +26,12 @@ public class CacheDao {
         return this.cacheMap.get(key);
     }
 
-    public void put(String token, SuccessfulLoginData successfulLoginData) {
+    public void put( SuccessfulLoginData successfulLoginData) {
         this.cacheMap.put(successfulLoginData.getToken(), successfulLoginData);
 
+    }
+
+    public void printCache(){
+        System.out.println(cacheMap.toString());
     }
 }

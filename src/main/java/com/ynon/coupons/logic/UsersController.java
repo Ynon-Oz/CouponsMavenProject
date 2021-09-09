@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import com.ynon.coupons.mapper.UsersMapper;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,13 +21,13 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UsersController {
-    @Autowired
-    private IUsersDao usersDao;
-    @Autowired
-    private CacheController cacheController;
-    @Autowired
-    private UsersMapper mapper;
+
+    private final IUsersDao usersDao;
+    private final CacheController cacheController;
+    private final CostumersController customersController;
+    private final UsersMapper mapper;
 
     //CREATE  -  ADD
     public ResponseEntity<?> addUser(User user) throws ApplicationException {
@@ -39,10 +40,11 @@ public class UsersController {
         log.info("User " + user.getEmail() + " is adding to DB");
         return new ResponseEntity<>((User) usersDao.save((user)), HttpStatus.CREATED);
     }
+
     public ResponseEntity<?> addUser(UserBean dto) throws ApplicationException {
         User user = mapper.toDao(dto);
-        System.out.println("dto: "+dto.getCompanyId());
-        System.out.println("Dao: "+user.getCompany().getId());
+        System.out.println("dto: " + dto.getCompanyId());
+        System.out.println("Dao: " + user.getCompany().getId());
         user.setEmail(user.getEmail().toLowerCase());
         userValidations(user);
         if (isUserExist(user.getEmail())) {
@@ -139,11 +141,24 @@ public class UsersController {
         if (!userLoginDetails.getPassword().equals(user.getPassword())) {
             throw new ApplicationException(ErrorType.WRONG_USERNAME_OR_PASSWORD, ErrorType.WRONG_USERNAME_OR_PASSWORD.getErrorMessage());
         }
-
+        //TODO change to UUID
         String token = generateToken(userLoginDetails);
-        SuccessfulLoginData successfulLoginData = new SuccessfulLoginData(user.getType(), user.getId(), token);
+        SuccessfulLoginData successfulLoginData = new SuccessfulLoginData(null, user.getType(), user.getId(), token);
+
+        switch (user.getType()) {
+            case ADMIN:
+                successfulLoginData.setName("Administrator");
+                break;
+            case COMPANY:
+                successfulLoginData.setName(user.getCompany().getName());
+                break;
+            case CUSTOMER:
+                successfulLoginData.setName(customersController.getCustomer(user.getId()).getFirstName());
+                break;
+        }
         cacheController.put(successfulLoginData);
         return successfulLoginData;
+
     }
 
     //	TOKEN GENERATOR

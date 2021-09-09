@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 
 public class SuccessfulLoginData {
-
+	private String name;
 	private UserType userType;
 	private long userId;
 	private String token;
