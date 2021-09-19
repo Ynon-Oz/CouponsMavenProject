@@ -41,9 +41,9 @@ public class MockCreator implements CommandLineRunner {
         log.info(ArtUtils.StartingMockProcess);
         // Creating  Companies
         log.info(ArtUtils.createCompanies);
-        Company comp1 = new Company("Coca Cola", "32 Akiva st Bney Brak", "03-6432166", "03-6432100", "www.coca-cola.co.il");
-        Company comp2 = new Company("ZARA", "57 Haruv st Herzlya", "09-9517654", "09-9517653", "www.zara.co.il");
-        Company comp3 = new Company("ZARA", "57 Haruv st Herzlya", "09-9517654", "09-9517653", "www.zara.co.il");
+        Company comp1 = new Company("Coca Cola", "32 Akiva st Bney Brak", "03-6432166", "sales@coca-cola.com", "www.coca-cola.co.il");
+        Company comp2 = new Company("ZARA", "57 Haruv st Herzlya", "09-9517654", "service@zara.co.il", "www.zara.co.il");
+//        Company comp3 = new Company("ZARA", "57 Haruv st Herzlya", "09-9517654", "09-9517653", "www.zara.co.il");
 
 //        String str1 = "2021-01-01 12:30";
 //        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");

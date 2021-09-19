@@ -48,12 +48,12 @@ public class Company {
     private List<User> users;
 
 
-    public Company(String name, String address, String phone, String fax, String web) {
+    public Company(String name, String address, String phone, String email, String web) {
         super();
         this.name = name;
         this.address = address;
         this.phone = phone;
-        this.email = fax;
+        this.email = email;
         this.website = web;
     }
 }

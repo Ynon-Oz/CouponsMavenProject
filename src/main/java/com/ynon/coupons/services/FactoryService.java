@@ -62,10 +62,14 @@ public class FactoryService {
                 .name(StringRandomValue(names, i))
                 .address(StringRandomValue(addresses, null))
                 .phone(phoneFaxGenerator())
-                .email(phoneFaxGenerator())
+                .email(emailGenerator(i))
 //                .users(null)
                 .coupons(coupons((int)Math.random()*5))
                 .build();
+    }
+
+    private static String emailGenerator(int id) {
+        return "comp"+id+"@"+id+".com";
     }
 
     private static String phoneFaxGenerator() {
